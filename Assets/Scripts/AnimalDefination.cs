@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AnimalDefinition")]
-public class SOAnimalDefinition : ScriptableObject 
+public class AnimalDefination : ScriptableObject 
 {
     public enum AnimalType
     {
@@ -14,7 +14,7 @@ public class SOAnimalDefinition : ScriptableObject
        Duck
     }
 
-    [SerializeField] private string name;
+    [SerializeField] private string animalName;
     [SerializeField] private Sprite icon;
     [SerializeField] private int cost;
     [SerializeField] private AnimalInstance prefab;

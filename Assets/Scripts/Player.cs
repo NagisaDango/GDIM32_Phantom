@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
-
-
-
-
-
     public void EarnMoney(int amount)
     {
 

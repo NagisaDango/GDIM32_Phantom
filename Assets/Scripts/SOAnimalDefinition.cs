@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalDefination : ScriptableObject 
+[CreateAssetMenu(menuName = "AnimalDefinition")]
+public class SOAnimalDefinition : ScriptableObject 
 {
     public enum AnimalType
     {
@@ -13,12 +14,12 @@ public class AnimalDefination : ScriptableObject
        Duck
     }
 
-    [SerializeField] private string name;
+    [SerializeField] private string animalName;
     [SerializeField] private Sprite icon;
     [SerializeField] private int cost;
     [SerializeField] private AnimalInstance prefab;
     [SerializeField] private AnimalType type;
-
+    
     public AnimalInstance Spawn(Player owner, Vector3 position)
     {
         AnimalInstance instance = Instantiate(prefab,position,Quaternion.identity);
