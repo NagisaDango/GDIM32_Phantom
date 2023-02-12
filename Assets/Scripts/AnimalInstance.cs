@@ -7,9 +7,7 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     public Player Owner { get; set; }
     public IGroupable ParentGroup { get; set; } 
     public string DisplayName { get; private set; }
-
     public Sprite Icon { get; private set; }
-
     public SOAnimalDefinition.AnimalType Type { get; private set; }
 
 
@@ -37,11 +35,11 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
 
     public void AddToGroup(List<IGroupable> toAdd)
     {
-        Debug.LogError("Should never be callee");
+        Debug.LogError("Should never be called");
     }
     public void RemoveFromGroup(List<IGroupable> toRemove)
     {
-        Debug.LogError("Should never be callee");
+        Debug.LogError("Should never be called");
     }
 
     public void RemoveAndDestroy(List<IGroupable> toRemove)
@@ -51,7 +49,7 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
 
     public List<IGroupable> GetSubGroups()
     {
-        Debug.LogError("Should never be callee");
+        Debug.LogError("Should never be called");
         return new List<IGroupable>();
     }
 }

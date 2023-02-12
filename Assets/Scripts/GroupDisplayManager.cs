@@ -115,8 +115,8 @@ public class GroupDisplayManager : MonoBehaviour, IDecoratorManager
     {
         createPopUp.SetActive(false);
         Group newGroup = new Group();
-        newGroup.Owner = GameStateManager.GetCurrentPlayer();
-        newGroup.GroupName = groupNameEntry.text;
+        //newGroup.Owner = GameStateManager.GetCurrentPlayer();
+        //newGroup.GroupName = groupNameEntry.text;
         rootDecorator.Group.AddToGroup(new List<IGroupable>() { newGroup });
         rootDecorator.Refresh();
     }

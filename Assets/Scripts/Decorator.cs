@@ -9,6 +9,7 @@ public abstract class Decorator : MonoBehaviour
 
     [SerializeField] protected TMP_Text nameDisplay;
     [SerializeField] protected TMP_Text costDisplay;
+    [SerializeField] protected TMP_Text descriptionDisplay;
 
     protected IDecoratorManager displayManager;
 
@@ -19,6 +20,7 @@ public abstract class Decorator : MonoBehaviour
 
     public void OnClick()
     {
+        print("clicked" + displayManager.ToString());
         displayManager.OnDecoratorClicked(this);
     }
 

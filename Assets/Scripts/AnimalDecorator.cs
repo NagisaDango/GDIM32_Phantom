@@ -10,6 +10,8 @@ public class AnimalDecorator : Decorator
     private AnimalInstance animalInst;
     public SOAnimalDefinition AnimalDef { get; set; }
 
+    public Button btn;
+
     public void Initialize(IGroupable a, IDecoratorManager manager)
     {
         if(a is AnimalInstance)
@@ -32,8 +34,12 @@ public class AnimalDecorator : Decorator
         AnimalDef = a;
         nameDisplay.text = a.GetName();
         costDisplay.text = "$" + a.GetCost();
+        descriptionDisplay.text = a.GetDescription();
         icon.sprite = a.GetIcon();
         base.Initialize(manager);
+
+        //btn.onClick.AddListener();
+
     }
 
     public override void Refresh()

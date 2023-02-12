@@ -23,8 +23,8 @@ public class GroupDecorator : Decorator
 
     public override void Refresh()
     {
-        groupCount.text = "Groups " + agGroup.GetGroupCount();
-        animalCount.text = "Animals " + agGroup.GEtItemCount();
+        //groupCount.text = "Groups " + agGroup.GetGroupCount();
+        //animalCount.text = "Animals " + agGroup.GEtItemCount();
         costDisplay.text = "$" + agGroup.GetValue();
 
         foreach(Decorator gd in children)
