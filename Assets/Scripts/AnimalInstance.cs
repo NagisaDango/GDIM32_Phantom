@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AnimalInstance : MonoBehaviour, IGroupable
+public abstract class AnimalInstance : MonoBehaviour, IGroupable, IBuyable, ISellable
 {
     public Player Owner { get; set; }
     public IGroupable ParentGroup { get; set; } 

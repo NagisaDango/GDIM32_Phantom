@@ -5,10 +5,13 @@ using UnityEngine;
 public interface IGroupable
 {
     Player Owner { get; set; }
+
     IGroupable ParentGroup { get; set; }
 
     bool IsComposite();
+
     int GetValue();
+
     void AddToGroup(List<IGroupable> toAdd);
 
     void RemoveFromGroup(List<IGroupable> toRemove);
