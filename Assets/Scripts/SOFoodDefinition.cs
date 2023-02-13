@@ -18,17 +18,27 @@ public class SOFoodDefinition : ScriptableObject
     [SerializeField] private Sprite icon;
     [SerializeField] private int displayCost;
     [SerializeField] private string displayDescription;
+    [SerializeField] private FoodInstance prefab;
     [SerializeField] private FoodType type;
+    [SerializeField] private int growValue;
 
-    //public AnimalInstance Spawn(Player owner, Transform location)
+
+    //public FoodInstance Spawn(Player owner, Transform location)
     //{
-    //    AnimalInstance instance = Instantiate(prefab, location.position, location.rotation);
+    //    FoodInstance instance = Instantiate(prefab, location.position, location.rotation);
     //    return instance;
     //}
+    public FoodInstance Spawn()
+    {
+        return new FoodInstance();
+    }
 
     public string GetName() { return displayName; }
     public Sprite GetIcon() { return icon; }
     public int GetCost() { return displayCost; }
     public string GetDescription() { return displayDescription; }
     public FoodType GetAnimalType() { return type; }
+    public int GetGrowValue() { return growValue; }
+
+    public FoodType GetType() { return type; }
 }

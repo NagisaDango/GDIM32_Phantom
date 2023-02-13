@@ -6,4 +6,6 @@ public interface IDecoratorManager
 {
     Decorator DecoratorFactory(IGroupable group, Transform parent);
     void OnDecoratorClicked(Decorator selected);
+
+
 }

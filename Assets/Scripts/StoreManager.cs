@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class StoreManager : MonoBehaviour, IDecoratorManager
 {
     [SerializeField] private TMP_Text money;
-    [SerializeField] private AnimalDecorator AnimalDecoratorPrefab;
-    [SerializeField] private Transform animalButtonParrent;
+    [SerializeField] private ItemDecorator AnimalDecoratorPrefab;
+    [SerializeField] private Transform animalInfoParrent;
 
     [SerializeField] private Player currentPlayer; //need delete serializefield later
 
@@ -18,11 +19,20 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
         
 
         SOAnimalDefinition[] animalDefs = Resources.LoadAll<SOAnimalDefinition>("AnimalDefinitions");
+        SOFoodDefinition[] foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions");
+
         foreach (SOAnimalDefinition animal in animalDefs)
         {
-            AnimalDecorator ad = Instantiate(AnimalDecoratorPrefab, animalButtonParrent);
+            ItemDecorator ad = Instantiate(AnimalDecoratorPrefab, animalInfoParrent);
             ad.Initialize(animal, this);
         }
+
+        foreach (SOFoodDefinition food in foodDefs)
+        {
+            ItemDecorator fd = Instantiate(AnimalDecoratorPrefab, animalInfoParrent);
+            fd.Initialize(food, this);
+        }
+
     }
 
     // Update is called once per frame
@@ -33,12 +43,11 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
 
     public void OnDecoratorClicked(Decorator selected)
     {
-        if(selected is AnimalDecorator)
-        {
-            AnimalDecorator ad = selected as AnimalDecorator;
-            currentPlayer.BuyAnimal(ad.AnimalDef);
-
-        }
+        //if(selected is AnimalDecorator)   //For later group sell use
+        //{
+        //    AnimalDecorator ad = selected as AnimalDecorator;
+        //    currentPlayer.BuyAnimal(ad.AnimalDef);
+        //}
     }
 
     public Decorator DecoratorFactory(IGroupable grouop, Transform parent)
@@ -46,5 +55,6 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
         return null;
     }
 
+    public Player GetPlayer() { return currentPlayer; }
 
 }

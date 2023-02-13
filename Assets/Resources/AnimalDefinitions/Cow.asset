@@ -15,6 +15,8 @@ MonoBehaviour:
   displayName: Cow
   icon: {fileID: 21300000, guid: 12494a15ef15a8f4c8fcb804a2bda94f, type: 3}
   displayCost: 50
+  sellValue: 150
   displayDescription: 'Eat: Hay, Carrot'
   prefab: {fileID: 5765269968040441773, guid: 9ec060093457ad84ca2733cb15c2c41e, type: 3}
   type: 0
+  adultGrowthValue: 100

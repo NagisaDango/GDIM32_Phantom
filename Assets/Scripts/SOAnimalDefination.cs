@@ -17,9 +17,11 @@ public class SOAnimalDefinition : ScriptableObject
     [SerializeField] private string displayName;
     [SerializeField] private Sprite icon;
     [SerializeField] private int displayCost;
+    [SerializeField] private int sellValue;
     [SerializeField] private string displayDescription;
     [SerializeField] private AnimalInstance prefab;
     [SerializeField] private AnimalType type;
+    [SerializeField] private int adultGrowthValue;
 
     public AnimalInstance Spawn(Player owner, Transform location)
     {
@@ -30,6 +32,8 @@ public class SOAnimalDefinition : ScriptableObject
     public string GetName() { return displayName; }
     public Sprite GetIcon() { return icon; }
     public int GetCost() { return displayCost; }
+    public int GetSellValue() { return sellValue; }
     public string GetDescription() { return displayDescription; }
     public AnimalType GetAnimalType() { return type; }
+    public int GetAdultGrowthValue() { return adultGrowthValue; }
 }

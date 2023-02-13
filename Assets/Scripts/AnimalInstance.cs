@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public abstract class AnimalInstance : MonoBehaviour, IGroupable
@@ -10,47 +12,64 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     public Sprite Icon { get; private set; }
     public SOAnimalDefinition.AnimalType Type { get; private set; }
 
+    public int AdultGrowthValue { get; private set; }
+
+    private int currentGrowth = 0;
+
+    private int currentValue;
 
 
-    private int CurrentValue;
-
-
-    public void Initialize(string name, int cost,SOAnimalDefinition.AnimalType type, Player owner, Sprite icon)
+    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue)
     {
         DisplayName = name;
-        CurrentValue = cost;
+        this.currentValue = value;
         Type = type;
         Owner = owner;
         Icon = icon;
+        AdultGrowthValue = adultGrwothValue;
     }
+
+
+
+    public int GetGrowth()
+    {
+        return currentGrowth;
+    }
+
+    public float GetGrowthRate()
+    {
+        return currentGrowth <= AdultGrowthValue ? (float)currentGrowth / AdultGrowthValue : 1;
+    }
+
 
     public int GetValue()
     {
-        return CurrentValue;
-    }
-    public bool IsComposite()
-    {
-        return false;
+        return currentValue;
     }
 
-    public void AddToGroup(List<IGroupable> toAdd)
-    {
-        Debug.LogError("Should never be called");
-    }
-    public void RemoveFromGroup(List<IGroupable> toRemove)
-    {
-        Debug.LogError("Should never be called");
-    }
+    //public bool IsComposite()
+    //{
+    //    return false;
+    //}
 
-    public void RemoveAndDestroy(List<IGroupable> toRemove)
-    {
-        Destroy(gameObject);
-    }
+    //public void AddToGroup(List<IGroupable> toAdd)
+    //{
+    //    Debug.LogError("Should never be called");
+    //}
+    //public void RemoveFromGroup(List<IGroupable> toRemove)
+    //{
+    //    Debug.LogError("Should never be called");
+    //}
 
-    public List<IGroupable> GetSubGroups()
-    {
-        Debug.LogError("Should never be called");
-        return new List<IGroupable>();
-    }
+    //public void RemoveAndDestroy(List<IGroupable> toRemove)
+    //{
+    //    Destroy(gameObject);
+    //}
+
+    //public List<IGroupable> GetSubGroups()
+    //{
+    //    Debug.LogError("Should never be called");
+    //    return new List<IGroupable>();
+    //}
 }
     

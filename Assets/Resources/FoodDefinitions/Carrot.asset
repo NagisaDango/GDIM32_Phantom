@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e9c3cf9e0510b4429ba8447fddb23dd, type: 3}
-  m_Name: SoyBean
+  m_Name: Carrot
   m_EditorClassIdentifier: 
-  displayName: Soybean
+  displayName: Carrot
   icon: {fileID: 0}
-  displayCost: 1
-  displayDescription: 'Food for: '
-  type: 0
+  displayCost: 2
+  displayDescription: 'Food for: Cow, Pig'
+  type: 2

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e9c3cf9e0510b4429ba8447fddb23dd, type: 3}
-  m_Name: Hay
+  m_Name: Corn
   m_EditorClassIdentifier: 
-  displayName: Hay
+  displayName: Corn
   icon: {fileID: 0}
-  displayCost: 2
-  displayDescription: 'Food for: '
-  type: 4
+  displayCost: 1
+  displayDescription: 'Food for: Pig, Chicken'
+  type: 3
