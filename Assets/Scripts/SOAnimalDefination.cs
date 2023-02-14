@@ -22,6 +22,7 @@ public class SOAnimalDefinition : ScriptableObject
     [SerializeField] private AnimalInstance prefab;
     [SerializeField] private AnimalType type;
     [SerializeField] private int adultGrowthValue;
+    [SerializeField] private int weight;
 
     [SerializeField] private List<FoodType> preferedFood;
 
@@ -41,4 +42,5 @@ public class SOAnimalDefinition : ScriptableObject
     public List<FoodType> GetPreferedFood() { return preferedFood; }
 
 
+    public int GetWeight() { return weight; }
 }
