@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 4123624450798024754}
   - component: {fileID: 575320316}
   - component: {fileID: 575320322}
+  - component: {fileID: 8563286497798236308}
   m_Layer: 0
   m_Name: SheepWhite
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33343957155313214
 MeshFilter:
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c09307dd5b8d5489f261b8143d8839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weight: 2
 --- !u!54 &575320316
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,5 +167,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5320263, y: 0.8927839, z: 1.268981}
+  m_Size: {x: 1.31, y: 1.19, z: 1.76}
+  m_Center: {x: 0.000000059604645, y: 0.4438215, z: 0.119502544}
+--- !u!65 &8563286497798236308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965851562501010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 2, z: 3}
   m_Center: {x: 0.000000059604645, y: 0.4438215, z: 0.119502544}

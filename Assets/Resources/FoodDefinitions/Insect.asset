@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Insect
   m_EditorClassIdentifier: 
   displayName: Insect
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4e232858d6c55674482d927964137e26, type: 3}
   displayCost: 3
   displayDescription: 'Food for: Chicken, Duck'
   type: 1
+  growValue: 0

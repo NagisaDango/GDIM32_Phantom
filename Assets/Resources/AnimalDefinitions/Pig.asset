@@ -20,3 +20,4 @@ MonoBehaviour:
   prefab: {fileID: 7859347306555990131, guid: de6abd774f85e18408346a3233418242, type: 3}
   type: 1
   adultGrowthValue: 150
+  weight: 2

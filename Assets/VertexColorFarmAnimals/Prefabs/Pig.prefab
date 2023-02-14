@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 7859347306555990131}
   - component: {fileID: 288762721}
   - component: {fileID: 288762727}
+  - component: {fileID: 7494498688175249046}
   m_Layer: 0
   m_Name: Pig
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33105911236239328
 MeshFilter:
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e424b7736159cc4eb0ea088318044f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weight: 2
 --- !u!54 &288762721
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,5 +167,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4093125, y: 0.697812, z: 1.1939198}
+  m_Size: {x: 1.02, y: 0.79, z: 1.49}
+  m_Center: {x: 0.000000014901161, y: 0.34174016, z: 0.11479871}
+--- !u!65 &7494498688175249046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 2, z: 3}
   m_Center: {x: 0.000000014901161, y: 0.34174016, z: 0.11479871}

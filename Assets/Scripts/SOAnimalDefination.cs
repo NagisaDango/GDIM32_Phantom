@@ -22,6 +22,7 @@ public class SOAnimalDefinition : ScriptableObject
     [SerializeField] private AnimalInstance prefab;
     [SerializeField] private AnimalType type;
     [SerializeField] private int adultGrowthValue;
+    [SerializeField] private int weight;
 
     public AnimalInstance Spawn(Player owner, Transform location)
     {
@@ -36,4 +37,5 @@ public class SOAnimalDefinition : ScriptableObject
     public string GetDescription() { return displayDescription; }
     public AnimalType GetAnimalType() { return type; }
     public int GetAdultGrowthValue() { return adultGrowthValue; }
+    public int GetWeight() { return weight; }
 }
