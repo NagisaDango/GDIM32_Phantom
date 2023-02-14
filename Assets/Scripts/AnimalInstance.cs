@@ -14,12 +14,12 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
 
     public int AdultGrowthValue { get; private set; }
 
-    private int currentGrowth = 0;
-
+    private float currentGrowth = 0;
     private int currentValue;
+    private List<FoodType> preferedFood;
 
 
-    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue)
+    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, List<FoodType> preferedFood)
     {
         DisplayName = name;
         this.currentValue = value;
@@ -27,20 +27,18 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
         Owner = owner;
         Icon = icon;
         AdultGrowthValue = adultGrwothValue;
+        this.preferedFood = preferedFood;
     }
 
+    public void AddGrowth(int amount) { currentGrowth += amount; }
 
-
-    public int GetGrowth()
-    {
-        return currentGrowth;
-    }
+    public float GetGrowth() { return currentGrowth; }
 
     public float GetGrowthRate()
     {
-        return currentGrowth <= AdultGrowthValue ? (float)currentGrowth / AdultGrowthValue : 1;
+        return currentGrowth <= AdultGrowthValue ? (currentGrowth / AdultGrowthValue) : 1;
     }
-
+    public List<FoodType> GetPreferedFood() { return preferedFood; }
 
     public int GetValue()
     {

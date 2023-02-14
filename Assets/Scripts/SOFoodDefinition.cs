@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FoodType
+{
+    SoyBean,
+    Insect,
+    Carrot,
+    Corn,
+    Hay
+}
+
 [CreateAssetMenu(menuName = "FoodDefinition")]
 public class SOFoodDefinition : ScriptableObject
 {
-    public enum FoodType
-    {
-        SoyBean,
-        Insect,
-        Carrot,
-        Corn,
-        Hay
-    }
 
     [SerializeField] private string displayName;
     [SerializeField] private Sprite icon;
@@ -37,8 +38,6 @@ public class SOFoodDefinition : ScriptableObject
     public Sprite GetIcon() { return icon; }
     public int GetCost() { return displayCost; }
     public string GetDescription() { return displayDescription; }
-    public FoodType GetAnimalType() { return type; }
     public int GetGrowValue() { return growValue; }
-
-    public FoodType GetType() { return type; }
+    public FoodType GetFoodType() { return type; }
 }

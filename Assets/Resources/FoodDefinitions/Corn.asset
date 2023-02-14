@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Corn
   icon: {fileID: 0}
-  displayCost: 1
+  displayCost: 5
   displayDescription: 'Food for: Pig, Chicken'
   type: 3
+  growValue: 9

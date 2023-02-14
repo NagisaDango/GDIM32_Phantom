@@ -17,3 +17,4 @@ MonoBehaviour:
   displayCost: 2
   displayDescription: 'Food for: Cow, Sheep'
   type: 4
+  growValue: 6

@@ -8,13 +8,13 @@ public class FoodInstance : IGroupable
     public IGroupable ParentGroup { get; set; }
     public string DisplayName { get; private set; }
     public Sprite Icon { get; private set; }
-    public SOFoodDefinition.FoodType Type { get; private set; }
+    public FoodType Type { get; private set; }
 
     private int growValue;
     private int currentValue;
 
 
-    public void Initialize(string name, int value, SOFoodDefinition.FoodType type, Player owner, Sprite icon, int growValue)
+    public void Initialize(string name, int value, FoodType type, Player owner, Sprite icon, int growValue)
     {
         DisplayName = name;
         this.currentValue = value;

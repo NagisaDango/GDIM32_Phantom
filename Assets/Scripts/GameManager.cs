@@ -5,43 +5,52 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject shopPanel;
-    [SerializeField] private GameObject FarmPanel;
+    [SerializeField] private GameObject farmPanel;
     [SerializeField] private GameObject displayPanel;
 
     [SerializeField] private Player player;
 
     [SerializeField] private int moneypreset = 500;
      
-
-
-
     void Start()
     {
         shopPanel.SetActive(false);
-        FarmPanel.SetActive(false);
+        farmPanel.SetActive(false);
         displayPanel.SetActive(true);
 
         player.SetMoney(moneypreset);
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         
         if(Input.GetKeyDown(KeyCode.I))
         {
             if (!shopPanel.activeSelf)
+            {
                 shopPanel.SetActive(true);
+                farmPanel.SetActive(false);
+            }
             else
-                shopPanel.SetActive(false);
+            {
+                farmPanel.SetActive(false);
+                shopPanel.SetActive(true);
+            }
         }
         if(Input.GetKeyUp(KeyCode.B))
         {
-            if (!FarmPanel.activeSelf)
-                FarmPanel.SetActive(true);
+            if (!farmPanel.activeSelf)
+            {
+                farmPanel.SetActive(true);
+                shopPanel.SetActive(false);
+            }
             else
-                FarmPanel.SetActive(false);
+            {
+                farmPanel.SetActive(false);
+                shopPanel.SetActive(true);
+            }
+                
         }
 
 

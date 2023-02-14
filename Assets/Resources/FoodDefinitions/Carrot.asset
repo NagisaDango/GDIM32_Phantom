@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Carrot
   icon: {fileID: 0}
-  displayCost: 2
+  displayCost: 6
   displayDescription: 'Food for: Cow, Pig'
   type: 2
+  growValue: 11

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using TMPro;
 
 public class FarmManager : MonoBehaviour, IDecoratorManager
 {
@@ -11,6 +14,11 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
     [SerializeField] private Player Owner;
 
 
+    public GameObject feedPanel;
+    public GameObject sellPanel;
+    public ToggleGroup toggleGroup;
+
+    public ItemDecorator currentDecorator;
 
 
     void OnEnable()
@@ -18,18 +26,13 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
         RefreshFarmList();
     }
 
-    void OnDisable()
-    {
-    }
+    void OnDisable() { }
 
-    public Decorator DecoratorFactory(IGroupable group, Transform parent)
-    {
-        return null;
-    }
+    public Decorator DecoratorFactory(IGroupable group, Transform parent) { return null; }
 
-    public void OnDecoratorClicked(Decorator selected)
-    {
-    }
+    public void OnDecoratorClicked(Decorator selected) { }
+
+    public Player GetPlayer() { return Owner; }
 
     public void RefreshFarmList()
     {
@@ -44,7 +47,33 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
             ad.Initialize(animal, this);
         }
     }
-    
+    public void OnSellConfirmed()
+    {
+        Owner.AddMoney(currentDecorator.GetAnimalInst().GetValue());
+        Owner.RemoveAnimal(currentDecorator.GetAnimalInst());
+        Destroy(currentDecorator.gameObject);
+        sellPanel.SetActive(false);
+    }
 
+    public void OnFeedConfirmed()
+    {
+        if (!toggleGroup.GetCurrentToggle()) return;
+
+        SOFoodDefinition def = toggleGroup.GetCurrentToggle().GetComponent<FoodChoice>().GetFoodDef();
+
+        currentDecorator.GetAnimalInst().AddGrowth(def.GetGrowValue());
+        currentDecorator.RefreshGrowSlider();
+        Owner.AddFoodCount(def.GetFoodType(), -1);
+
+
+        feedPanel.SetActive(false);
+
+        toggleGroup.CLeanToggleGroup();
+    }
+
+    public void SetSellPriceText(int value)
+    {
+        sellPanel.transform.Find("PriceText").GetComponentInChildren<TMP_Text>().text = "Sell the animal for $" + value.ToString();
+    }
 
 }

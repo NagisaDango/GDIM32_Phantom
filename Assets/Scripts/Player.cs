@@ -29,21 +29,57 @@ public class Player : MonoBehaviour
     [SerializeField][Min(0)] private int carrot = 0;
     [SerializeField][Min(0)] private int corn = 0;
 
-    public int GetSoyBean() { return soybean; }
-    public int GetInsect() { return insect; }
-    public int GetCarrot() {return carrot; }
-    public int GetCorn() { return corn; }
-    public int GetHay() { return hay; }
     public int GetMoney() { return money; }
 
     public void SetMoney(int money) { this.money = money; }
 
     public void AddMoney(int amount) { this.money += amount; }
-    public void AddSoyBean(int amount) { this.soybean = amount; }
-    public void AddInsect(int amount) { this.insect = amount;}
-    public void AddHay(int amount) { this.hay= amount; }
-    public void AddCorn(int amount) { this.corn = amount; }
-    public void AddCarrot(int amount) { this.carrot = amount; }
+
+    public void AddFoodCount(FoodType type, int amount)
+    {
+        switch (type)
+        {
+            case FoodType.Hay:
+                hay += amount;
+                break;
+            case FoodType.SoyBean:
+                soybean += amount;
+                break;
+            case FoodType.Corn:
+                corn += amount;
+                break;
+            case FoodType.Carrot:
+                carrot += amount;
+                break;
+            case FoodType.Insect:
+                insect += amount;
+                break;
+        }
+    }
+
+    public int GetFoodCount(FoodType type)
+    {
+        switch (type)
+        {
+            case FoodType.Hay:
+                return hay;
+                break;
+            case FoodType.SoyBean:
+                return soybean;
+                break;
+            case FoodType.Corn:
+                return corn;
+                break;
+            case FoodType.Carrot:
+                return carrot;
+                break;
+            case FoodType.Insect:
+                return insect;
+                break;
+        }
+        return -1;
+    }
+
 
 
 
@@ -52,7 +88,7 @@ public class Player : MonoBehaviour
     public void BuyItem(SOAnimalDefinition animalDef)
     {
         AnimalInstance animalInst = animalDef.Spawn(this, animalSpawnPos);
-        animalInst.Initialize(animalDef.GetName(), animalDef.GetSellValue(), animalDef.GetAnimalType(), this, animalDef.GetIcon(), animalDef.GetAdultGrowthValue());
+        animalInst.Initialize(animalDef.GetName(), animalDef.GetSellValue(), animalDef.GetAnimalType(), this, animalDef.GetIcon(), animalDef.GetAdultGrowthValue(), animalDef.GetPreferedFood());
         animals.Add(animalInst);
 
         money -= animalDef.GetCost();
@@ -62,25 +98,25 @@ public class Player : MonoBehaviour
     {
         FoodInstance foodInst = foodDef.Spawn();
 
-        foodInst.Initialize(foodDef.GetName(), foodDef.GetCost(), foodDef.GetAnimalType(), this, foodDef.GetIcon(), foodDef.GetGrowValue());
+        foodInst.Initialize(foodDef.GetName(), foodDef.GetCost(), foodDef.GetFoodType(), this, foodDef.GetIcon(), foodDef.GetGrowValue());
 
         foods.Add(foodInst);
 
-        switch (foodDef.GetType())
+        switch (foodDef.GetFoodType())
         {
-            case SOFoodDefinition.FoodType.Hay:
+            case FoodType.Hay:
                 hay++;
                 break;
-            case SOFoodDefinition.FoodType.SoyBean:
+            case FoodType.SoyBean:
                 soybean++;
                 break;
-            case SOFoodDefinition.FoodType.Corn:
+            case FoodType.Corn:
                 corn++;
                 break;
-            case SOFoodDefinition.FoodType.Carrot:
+            case FoodType.Carrot:
                 carrot++;
                 break;
-            case SOFoodDefinition.FoodType.Insect:
+            case FoodType.Insect:
                 insect++;
                 break;
         }

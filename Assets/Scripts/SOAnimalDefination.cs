@@ -23,6 +23,8 @@ public class SOAnimalDefinition : ScriptableObject
     [SerializeField] private AnimalType type;
     [SerializeField] private int adultGrowthValue;
 
+    [SerializeField] private List<FoodType> preferedFood;
+
     public AnimalInstance Spawn(Player owner, Transform location)
     {
         AnimalInstance instance = Instantiate(prefab, location.position, location.rotation);
@@ -36,4 +38,7 @@ public class SOAnimalDefinition : ScriptableObject
     public string GetDescription() { return displayDescription; }
     public AnimalType GetAnimalType() { return type; }
     public int GetAdultGrowthValue() { return adultGrowthValue; }
+    public List<FoodType> GetPreferedFood() { return preferedFood; }
+
+
 }

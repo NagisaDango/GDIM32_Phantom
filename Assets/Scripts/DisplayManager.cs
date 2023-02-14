@@ -23,11 +23,11 @@ public class DisplayManager : MonoBehaviour
     void Update()
     {
         money.text = currentPlayer.GetMoney().ToString();
-        soyBean.text = currentPlayer.GetSoyBean().ToString();
-        carrot.text = currentPlayer.GetCarrot().ToString();
-        hay.text = currentPlayer.GetHay().ToString();
-        corn.text = currentPlayer.GetCorn().ToString();
-        insect.text = currentPlayer.GetInsect().ToString();
+        soyBean.text = currentPlayer.GetFoodCount(FoodType.SoyBean).ToString();
+        carrot.text = currentPlayer.GetFoodCount(FoodType.Carrot).ToString();
+        hay.text = currentPlayer.GetFoodCount(FoodType.Hay).ToString();
+        corn.text = currentPlayer.GetFoodCount(FoodType.Corn).ToString();
+        insect.text = currentPlayer.GetFoodCount(FoodType.Insect).ToString();
 
 
     }

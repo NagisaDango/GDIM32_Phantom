@@ -17,12 +17,19 @@ public class ItemDecorator : Decorator
     [SerializeField] private TMP_Text itemtype;
     [SerializeField] private ItemType type;
     [SerializeField] private Slider slider;
+    [SerializeField] private Toggle toggleChoicePrefab;
 
-    private AnimalInstance ItemInst;
+    private AnimalInstance AnimalInst;
     public SOAnimalDefinition AnimalDef { get; set; }
     public SOFoodDefinition FoodDef { get; set; }
 
     public Button btn;
+    private SOFoodDefinition[] foodDefs;
+
+    void Start()
+    {
+        foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions");
+    }
 
     //public void Initialize(IGroupable a, IDecoratorManager manager)
     //{
@@ -46,11 +53,11 @@ public class ItemDecorator : Decorator
         if (a is AnimalInstance)
         {
             Group = a;
-            ItemInst = a as AnimalInstance;
-            nameDisplay.text = ItemInst.name;
-            icon.sprite = ItemInst.Icon;
+            AnimalInst = a as AnimalInstance;
+            nameDisplay.text = AnimalInst.name;
+            icon.sprite = AnimalInst.Icon;
 
-            slider.value = ItemInst.GetGrowthRate();
+            RefreshGrowSlider();
             base.Initialize(manager);
         }
         else
@@ -105,23 +112,49 @@ public class ItemDecorator : Decorator
             }
     }
 
-    //public void OnBuyFoodBtnClicked()
-    //{
-    //    if (displayManager is StoreManager)
-    //        if ((displayManager as StoreManager).GetPlayer().GetMoney() < FoodDef.GetCost()) { return; }
-    //        (displayManager as StoreManager).GetPlayer().BuyItem(FoodDef);
-    //}
 
-    public void OnFeedBtnClicked()
+    public void OnFeedBtnClicked(Decorator decorator)
     {
+        //(displayManager as FarmManager).feedPanel.SetActive(true); // move to last line to aviod conflict
+        (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
+
+        foreach(FoodType type in AnimalInst.GetPreferedFood())
+        {
+            foreach (SOFoodDefinition t in foodDefs)
+            {
+                if (type == t.GetFoodType())
+                {
+                    if ((displayManager as FarmManager).GetPlayer().GetFoodCount(type) <= 0) continue;
+
+                    Toggle go = Instantiate(toggleChoicePrefab, (displayManager as FarmManager).toggleGroup.transform);
+
+                    go.SetIcon(t.GetIcon());
+                    go.GetComponent<FoodChoice>().SetFoodDef(t);
+                }
+            }
+        }
+        (displayManager as FarmManager).feedPanel.SetActive(true);
+    }
+
+    public void OnSellBtnClicked(Decorator decorator)
+    {
+        if(AnimalInst.GetGrowthRate() < 1) return;
+
+        (displayManager as FarmManager).sellPanel.SetActive(true);
+        (displayManager as FarmManager).SetSellPriceText(AnimalInst.GetValue());
+
+        (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
 
     }
 
-    public void OnSellBtnClicked()
+    public AnimalInstance GetAnimalInst()
     {
-        ItemInst.Owner.AddMoney(ItemInst.GetValue());
-        ItemInst.Owner.RemoveAnimal(ItemInst);
-        Destroy(gameObject);
+        return AnimalInst;
+    }
+
+    public void RefreshGrowSlider()
+    {
+        slider.value = AnimalInst.GetGrowthRate();
     }
 
 }
