@@ -8,10 +8,9 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
 {
     public Player Owner { get; set; }
     public IGroupable ParentGroup { get; set; } 
-    public string DisplayName { get;  set; }
-    public Sprite Icon { get;  set; }
-    public SOAnimalDefinition.AnimalType Type { get; set; }
-    public int Weight;
+    public string DisplayName { get; private set; }
+    public Sprite Icon { get; private set; }
+    public SOAnimalDefinition.AnimalType Type { get; private set; }
 
     public int AdultGrowthValue { get; private set; }
 
@@ -21,7 +20,6 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
 
 
     public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, List<FoodType> preferedFood)
-    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, int weight)
     {
         DisplayName = name;
         this.currentValue = value;
@@ -30,22 +28,11 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
         Icon = icon;
         AdultGrowthValue = adultGrwothValue;
         this.preferedFood = preferedFood;
-        Weight = weight;
     }
 
     public void AddGrowth(int amount) { currentGrowth += amount; }
 
     public float GetGrowth() { return currentGrowth; }
-
-    public int GetWeight()
-    {
-        return Weight;
-    }
-
-    public int GetGrowth()
-    {
-        return currentGrowth;
-    }
 
     public float GetGrowthRate()
     {
@@ -57,21 +44,6 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     {
         return currentValue;
     }
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        AnimalInstance animal = other.gameObject.GetComponent<AnimalInstance>();
-        if (other.gameObject.tag.Equals("Player") && Input.GetKeyDown(KeyCode.E))
-        {
-            backpackManager.AddItem(this);
-            backpackManager.createNewItem(thisAnimal);
-            if (backpackManager.addable)
-            {
-                Destroy(other.gameObject);
-                //other.gameObject.SetActive(false);
-            }
-        }
-    }*/
 
     //public bool IsComposite()
     //{
