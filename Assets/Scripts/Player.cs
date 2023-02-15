@@ -8,7 +8,10 @@ public class Player : MonoBehaviour
     [SerializeField] private List<AnimalInstance> animals = new List<AnimalInstance>();
     [SerializeField] private List<FoodInstance> foods = new List<FoodInstance>();
 
+    [SerializeField] private BackpackManager backpack;
 
+
+    public bool inFarm;
 
 
 
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour
     public void BuyItem(SOAnimalDefinition animalDef)
     {
         AnimalInstance animalInst = animalDef.Spawn(this, animalSpawnPos);
-        animalInst.Initialize(animalDef.GetName(), animalDef.GetSellValue(), animalDef.GetAnimalType(), this, animalDef.GetIcon(), animalDef.GetAdultGrowthValue(), animalDef.GetPreferedFood());
+        animalInst.Initialize(animalDef.GetName(), animalDef.GetSellValue(), animalDef.GetAnimalType(), this, animalDef.GetIcon(), animalDef.GetAdultGrowthValue(), animalDef.GetPreferedFood(),animalDef.GetWeight());
         animals.Add(animalInst);
 
         money -= animalDef.GetCost();
@@ -130,5 +133,26 @@ public class Player : MonoBehaviour
         animals.Remove(animal);
     }
 
-
+    public void StoreToFarm(AnimalInstance animal)//store the animals in inventory back to farm if the player is in farm
+    {
+        if (inFarm)
+        {
+            animals.Add(animal);
+            animal.gameObject.SetActive(true);
+            animal.transform.position = new Vector3(animalSpawnPos.position.x, animalSpawnPos.position.y, animalSpawnPos.position.z);
+            backpack.RemoveItem(animal);
+        }
+    }
+    //see if the player is in the farm range
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Farm"))
+        {
+            inFarm = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        inFarm = false;
+    }
 }

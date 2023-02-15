@@ -20,4 +20,5 @@ MonoBehaviour:
   prefab: {fileID: 4032783741758600977, guid: 32026357c04e0e944835774b42e3c1b7, type: 3}
   type: 4
   adultGrowthValue: 75
+  weight: 1
   preferedFood: 0100000000000000

@@ -11,6 +11,7 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     public string DisplayName { get; private set; }
     public Sprite Icon { get; private set; }
     public SOAnimalDefinition.AnimalType Type { get; private set; }
+    public int Weight;
 
     public int AdultGrowthValue { get; private set; }
 
@@ -19,7 +20,7 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     private List<FoodType> preferedFood;
 
 
-    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, List<FoodType> preferedFood)
+    public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, List<FoodType> preferedFood, int weight)
     {
         DisplayName = name;
         this.currentValue = value;
@@ -28,6 +29,12 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
         Icon = icon;
         AdultGrowthValue = adultGrwothValue;
         this.preferedFood = preferedFood;
+        Weight = weight;
+    }
+
+    public int GetWeight()
+    {
+        return Weight;
     }
 
     public void AddGrowth(int amount) { currentGrowth += amount; }

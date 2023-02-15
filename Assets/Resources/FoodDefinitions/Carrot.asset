@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: 
   displayName: Carrot
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a1112bbfdacf09049bb1fbfad2e016bf, type: 3}
   displayCost: 6
   displayDescription: 'Food for: Cow, Pig'
   type: 2
