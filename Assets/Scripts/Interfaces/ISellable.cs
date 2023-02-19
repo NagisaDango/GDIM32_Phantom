@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public interface ISellable 
+//by Shengjie Zhang
+public interface ISellable //For later drafts
 {
-    int GetValue();
+    //int GetValue();
 }

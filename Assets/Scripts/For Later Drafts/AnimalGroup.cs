@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//by Shengjie Zhang
 public class AnimalGroup : IGroupable
 {
     //public Player Owner { get; set; }

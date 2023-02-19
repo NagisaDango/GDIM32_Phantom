@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using JetBrains.Annotations;
+//by Yiran Luo
 
 public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    //The build-in Toggle and Toggle Group do not support selecting only one from multiple toggles
+    //So, we implement the Toggle function here
+
     [SerializeField] private Image image;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
@@ -16,7 +18,6 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     [SerializeField] private Color disabledColor;
     [SerializeField] private UnityEvent onSelect;
 
-    //[HideInInspector]
     public ToggleGroup toggleGroup;
 
     private bool isSelected = false;
@@ -40,13 +41,6 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         }
     }
 
-    public void OnDeselect()
-    {
-        if (isDisabled) return;
-
-        SetSelected(false);
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (isDisabled) return;
@@ -67,6 +61,13 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         }
     }
 
+    public void OnDeselect()
+    {
+        if (isDisabled) return;
+
+        SetSelected(false);
+    }
+
     public void SetSelected(bool value)
     {
         if (isDisabled) return;
@@ -85,7 +86,6 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             image.color = normalColor;
         }
     }
-
     public void SetDisabled(bool value)
     {
         isDisabled = value;
@@ -102,7 +102,7 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void SetIcon(Sprite icon)
     {
-        GetComponentInChildren<Image>().sprite = icon;
+        transform.GetChild(0).GetComponent<Image>().sprite = icon;
     }
 }
 

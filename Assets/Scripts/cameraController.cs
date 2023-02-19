@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class cameraController : MonoBehaviour
+//Wei Lun Tsai
+public class CameraController : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
+    [SerializeField] private GameObject targetPlayer;
     private float xRot;
     private float yRot;
     [SerializeField] private float xSen;
     [SerializeField] private float ySen;
+    [SerializeField] private float xThreshold = 80f;
 
-    private void Update()
+
+    private void LateUpdate()
     {
         follow();
     }
@@ -18,19 +20,24 @@ public class cameraController : MonoBehaviour
     private void follow()
     {
         //follow the target
-        this.transform.position = target.transform.position;
+        this.transform.position = targetPlayer.transform.position;
+
+        //if viewing a panel, freeze the camera
+        if (targetPlayer.GetComponent<Player>().InPanel) return;
 
         //change the camera rotation according to the player mouse
-        float mosueX=Input.GetAxisRaw("Mouse X")*Time.deltaTime*xSen;
+        float mosueX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSen;
         float mosueY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySen;
 
-        target.transform.Rotate(Vector3.up * mosueX);
+        targetPlayer.transform.Rotate(Vector3.up * mosueX);
+
+        //set threshold for camera angel
         xRot -= mosueY;
-        xRot = Mathf.Clamp(xRot, -80, 80);
+        xRot = Mathf.Clamp(xRot, -xThreshold, xThreshold);
         yRot += mosueX;
 
+
         this.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
-        target.transform.rotation=Quaternion.Euler(0, yRot, 0);
     }
 
 }

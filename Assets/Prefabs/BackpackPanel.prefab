@@ -569,6 +569,7 @@ MonoBehaviour:
   animalInstance: {fileID: 0}
   animals: []
   itemDecoratorPrefab: {fileID: 2683508715832652779, guid: 2fd32d36f0d2ab54ca766da021ed4baf, type: 3}
+  currentPlayer: {fileID: 0}
 --- !u!1 &5048279068748639934
 GameObject:
   m_ObjectHideFlags: 0

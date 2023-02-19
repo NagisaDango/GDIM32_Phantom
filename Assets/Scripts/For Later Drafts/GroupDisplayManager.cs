@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//by Shengjie Zhang
 public class GroupDisplayManager : MonoBehaviour //, IDecoratorManager
 {
     //public Decorator Selected { get;  set; }

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public interface IGroupable
+//by Shengjie Zhang
+public interface IGroupable //For Later draft
 {
     //Player Owner { get; set; }
     //IGroupable ParentGroup { get; set; }

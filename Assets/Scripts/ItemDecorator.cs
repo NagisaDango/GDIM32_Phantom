@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+//by Shengjie Zhang
 
 public class ItemDecorator : Decorator
 {
@@ -23,41 +24,25 @@ public class ItemDecorator : Decorator
     public SOAnimalDefinition AnimalDef { get; set; }
     public SOFoodDefinition FoodDef { get; set; }
 
-    public Button btn;
+    //public Button btn;
     private SOFoodDefinition[] foodDefs;
 
     void Start()
     {
-        foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions");
+        foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions"); // load food definitions
     }
 
-    //public void Initialize(IGroupable a, IDecoratorManager manager)
-    //{
-    //    if(a is AnimalInstance)
-    //    {
-    //        Group = a;
-    //        animalInst = a as AnimalInstance;
-    //        nameDisplay.text = animalInst.name;
-    //        costDisplay.text = "$" + animalInst.GetValue();
-    //        icon.sprite = animalInst.Icon;
-    //        base.Initialize(manager);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Trying to decorate a non Animal as a Aniaml");
-    //    }
-    //}
-
-    public void Initialize(IGroupable a, IDecoratorManager manager)
+    // initialization for Instance inherited Igroupable interface
+    public void Initialize(IGroupable a, IDecoratorManager manager) 
     {
-        if (a is AnimalInstance)
+        if (a is AnimalInstance) // case for Animal Instance
         {
             Group = a;
             AnimalInst = a as AnimalInstance;
-            nameDisplay.text = AnimalInst.name;
+            if(nameDisplay) nameDisplay.text = AnimalInst.name;
             icon.sprite = AnimalInst.Icon;
 
-            RefreshGrowSlider();
+            if(slider) RefreshGrowSlider();
             base.Initialize(manager);
         }
         else
@@ -65,7 +50,7 @@ public class ItemDecorator : Decorator
             Debug.LogError("Trying to decorate a non Animal as a Aniaml");
         }
     }
-
+    // initialization for aniamal definition
     public void Initialize(SOAnimalDefinition a, IDecoratorManager manager)
     {
         AnimalDef = a;
@@ -78,6 +63,7 @@ public class ItemDecorator : Decorator
         base.Initialize(manager);
     }
 
+    // initialization for food definition
     public void Initialize(SOFoodDefinition f, IDecoratorManager manager)
     {
         FoodDef = f;
@@ -90,41 +76,38 @@ public class ItemDecorator : Decorator
         base.Initialize(manager);
     }
 
+    public override void Refresh() { }
 
-
-    public override void Refresh()
-    {
-
-    }
-
-    public void OnBuyBtnClicked()
+    public void OnBuyBtnClicked() // for pressing Buy button
     {
         if (displayManager is StoreManager)
             if (type == ItemType.Animal)
             {
-                if ((displayManager as StoreManager).GetPlayer().GetMoney() < AnimalDef.GetCost()) { return; }
+                if ((displayManager as StoreManager).GetPlayer().GetMoney() < AnimalDef.GetCost()) return;
+
                 (displayManager as StoreManager).GetPlayer().BuyItem(AnimalDef);
             }
             else
             {
-                if ((displayManager as StoreManager).GetPlayer().GetMoney() < FoodDef.GetCost()) { return; }
+                if ((displayManager as StoreManager).GetPlayer().GetMoney() < FoodDef.GetCost()) return;
+
                 (displayManager as StoreManager).GetPlayer().BuyItem(FoodDef);
             }
     }
 
 
-    public void OnFeedBtnClicked(Decorator decorator)
+    public void OnFeedBtnClicked(Decorator decorator) //for pressign Feed Button
     {
         //(displayManager as FarmManager).feedPanel.SetActive(true); // move to last line to aviod conflict
         (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
 
-        foreach(FoodType type in AnimalInst.GetPreferedFood())
+        foreach(FoodType type in AnimalInst.PreferedFood)
         {
             foreach (SOFoodDefinition t in foodDefs)
             {
                 if (type == t.GetFoodType())
                 {
-                    if ((displayManager as FarmManager).GetPlayer().GetFoodCount(type) <= 0) continue;
+                    if ((displayManager as FarmManager).GetPlayer().GetFoodCount(type) <= 0) continue; // continue if having no corresponding food
 
                     Toggle go = Instantiate(toggleChoicePrefab, (displayManager as FarmManager).toggleGroup.transform);
 
@@ -136,25 +119,22 @@ public class ItemDecorator : Decorator
         (displayManager as FarmManager).feedPanel.SetActive(true);
     }
 
-    public void OnSellBtnClicked(Decorator decorator)
+    public void OnSellBtnClicked(Decorator decorator) //for pressign Sell Button
     {
         if(AnimalInst.GetGrowthRate() < 1) return;
 
         (displayManager as FarmManager).sellPanel.SetActive(true);
-        (displayManager as FarmManager).SetSellPriceText(AnimalInst.GetValue());
+        (displayManager as FarmManager).SetSellPriceText(AnimalInst.CurrentValue);
 
         (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
 
     }
 
-    public AnimalInstance GetAnimalInst()
-    {
-        return AnimalInst;
-    }
+    public AnimalInstance GetAnimalInst() { return AnimalInst; }
 
     public void RefreshGrowSlider()
     {
-        slider.value = AnimalInst.GetGrowthRate();
+        slider.value = AnimalInst.GetGrowthRate(); // update the growing stat for animal instance
     }
 
 }

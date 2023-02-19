@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+//by Shengjie Zhang
 
 public abstract class AnimalInstance : MonoBehaviour, IGroupable
 {
@@ -11,17 +10,24 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     public string DisplayName { get; private set; }
     public Sprite Icon { get; private set; }
     public SOAnimalDefinition.AnimalType Type { get; private set; }
-    public int Weight;
+    public int AdultGrowthValue { get; set; }
 
-    public int AdultGrowthValue { get; private set; }
+    private int weight; //the weight it count for the package
+    public int Weight { get { return weight; } }
+
 
     private float currentGrowth = 0;
-    private int currentValue;
+
+    private int currentValue; //selling price
+    public int CurrentValue { get { return currentValue; } }
+
     private List<FoodType> preferedFood;
+    public List<FoodType> PreferedFood { get { return preferedFood; } }
 
-
+    //Intialize values for animal instance
     public void Initialize(string name, int value, SOAnimalDefinition.AnimalType type, Player owner, Sprite icon, int adultGrwothValue, List<FoodType> preferedFood, int weight)
     {
+        gameObject.name = name;
         DisplayName = name;
         this.currentValue = value;
         Type = type;
@@ -29,30 +35,27 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
         Icon = icon;
         AdultGrowthValue = adultGrwothValue;
         this.preferedFood = preferedFood;
-        Weight = weight;
-    }
-
-    public int GetWeight()
-    {
-        return Weight;
+        this.weight = weight;
     }
 
     public void AddGrowth(int amount) { currentGrowth += amount; }
-
-    public float GetGrowth() { return currentGrowth; }
 
     public float GetGrowthRate()
     {
         return currentGrowth <= AdultGrowthValue ? (currentGrowth / AdultGrowthValue) : 1;
     }
-    public List<FoodType> GetPreferedFood() { return preferedFood; }
 
-    public int GetValue()
+    public void CloseTriggerCollider() // turn offs the trigger collider used for checking if playre is nereby.
     {
-        return currentValue;
+        Collider[] colliders = gameObject.GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            if (collider.isTrigger)
+                collider.enabled = false;
+        }
     }
 
-    //public bool IsComposite()
+    //public bool IsComposite() // For Later drafts
     //{
     //    return false;
     //}

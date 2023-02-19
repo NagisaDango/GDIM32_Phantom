@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
+//Shengjie Zhang
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class Player : MonoBehaviour
 
     [SerializeField] private BackpackManager backpack;
 
+    public bool InFarm { get; private set; } // in trigger area for Farm panel
+    public bool InShop { get; private set; } // in trigger area for Ship panel
 
-    public bool inFarm;
+    public bool InPanel { get; set; } // still viewing panel
+
 
 
 
@@ -83,21 +87,20 @@ public class Player : MonoBehaviour
         return -1;
     }
 
-
-
-
     public List<AnimalInstance> GetAnimals() { return animals; }
 
-    public void BuyItem(SOAnimalDefinition animalDef)
+
+    public void BuyItem(SOAnimalDefinition animalDef) // buy animal
     {
-        AnimalInstance animalInst = animalDef.Spawn(this, animalSpawnPos);
+        AnimalInstance animalInst = animalDef.Spawn(this, animalSpawnPos.position, animalSpawnPos.rotation);
         animalInst.Initialize(animalDef.GetName(), animalDef.GetSellValue(), animalDef.GetAnimalType(), this, animalDef.GetIcon(), animalDef.GetAdultGrowthValue(), animalDef.GetPreferedFood(),animalDef.GetWeight());
+        animalInst.CloseTriggerCollider();
         animals.Add(animalInst);
 
         money -= animalDef.GetCost();
     }
 
-    public void BuyItem(SOFoodDefinition foodDef)
+    public void BuyItem(SOFoodDefinition foodDef) // buy food
     {
         FoodInstance foodInst = foodDef.Spawn();
 
@@ -131,28 +134,41 @@ public class Player : MonoBehaviour
     public void RemoveAnimal(AnimalInstance animal)
     {
         animals.Remove(animal);
+        Destroy(animal.gameObject);
     }
 
-    public void StoreToFarm(AnimalInstance animal)//store the animals in inventory back to farm if the player is in farm
+    public void StoreToFarm(AnimalInstance animal) //store the animals in inventory back to farm if the player is in farm
     {
-        if (inFarm)
+        if (InFarm)
         {
             animals.Add(animal);
+            animal.transform.position = animalSpawnPos.position;
             animal.gameObject.SetActive(true);
-            animal.transform.position = new Vector3(animalSpawnPos.position.x, animalSpawnPos.position.y, animalSpawnPos.position.z);
-            backpack.RemoveItem(animal);
+            animal.CloseTriggerCollider();
         }
     }
-    //see if the player is in the farm range
+
+    //see if the player is in the farm or Shop range
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Farm"))
         {
-            inFarm = true;
+            InFarm = true;
+        }
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            InShop = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        inFarm = false;
+        if (other.gameObject.CompareTag("Farm"))
+        {
+            InFarm = false;
+        }
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            InShop = false;
+        }
     }
 }

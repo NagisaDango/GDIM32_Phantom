@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//by Yiran Luo
 
 [CreateAssetMenu(menuName = "AnimalDefinition")]
 public class SOAnimalDefinition : ScriptableObject 
@@ -26,9 +27,9 @@ public class SOAnimalDefinition : ScriptableObject
 
     [SerializeField] private List<FoodType> preferedFood;
 
-    public AnimalInstance Spawn(Player owner, Transform location)
+    public AnimalInstance Spawn(Player owner, Vector3 position, Quaternion rotation)
     {
-        AnimalInstance instance = Instantiate(prefab, location.position, location.rotation);
+        AnimalInstance instance = Instantiate(prefab, position, rotation);
         return instance;
     }
 

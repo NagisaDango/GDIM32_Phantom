@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//by Yiran Luo
 
 public class ToggleGroup : MonoBehaviour
 {
@@ -22,10 +22,10 @@ public class ToggleGroup : MonoBehaviour
 
     private void OnDisable()
     {
-        CLeanToggleGroup();
+        CleanToggleGroup();
     }
 
-    public void CLeanToggleGroup()
+    public void CleanToggleGroup()
     {
         lastSelectedToggle = null;
         currentSelectedToggle = null;

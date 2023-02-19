@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Farm
   - Animal
+  - Shop
   layers:
   - Default
   - TransparentFX

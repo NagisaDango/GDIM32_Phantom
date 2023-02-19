@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//by Xinlin Li
 public class Cow : AnimalInstance
 {
     // Start is called before the first frame update

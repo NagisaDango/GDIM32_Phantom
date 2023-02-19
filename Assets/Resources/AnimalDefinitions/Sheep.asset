@@ -19,6 +19,6 @@ MonoBehaviour:
   displayDescription: 'Eat: Hay'
   prefab: {fileID: 4123624450798024754, guid: e82139b3bae6212439ea1e85ad29678b, type: 3}
   type: 2
-  adultGrowthValue: 100
+  adultGrowthValue: 80
   weight: 2
   preferedFood: 04000000

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//by Yiran Luo
 public enum FoodType
 {
     SoyBean,
@@ -29,6 +29,7 @@ public class SOFoodDefinition : ScriptableObject
     //    FoodInstance instance = Instantiate(prefab, location.position, location.rotation);
     //    return instance;
     //}
+
     public FoodInstance Spawn()
     {
         return new FoodInstance();

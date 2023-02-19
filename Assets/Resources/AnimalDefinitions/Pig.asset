@@ -19,6 +19,6 @@ MonoBehaviour:
   displayDescription: 'Eat: Soybean, Corn, Carrot'
   prefab: {fileID: 7859347306555990131, guid: de6abd774f85e18408346a3233418242, type: 3}
   type: 1
-  adultGrowthValue: 150
+  adultGrowthValue: 125
   weight: 2
   preferedFood: 000000000300000002000000

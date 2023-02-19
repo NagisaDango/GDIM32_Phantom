@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
+//Shenjie Zhang
 
 public class StoreManager : MonoBehaviour, IDecoratorManager
 {
-    [SerializeField] private TMP_Text money;
     [SerializeField] private ItemDecorator AnimalDecoratorPrefab;
     [SerializeField] private Transform animalInfoParrent;
 
-    [SerializeField] private Player currentPlayer; //need delete serializefield later
+    [SerializeField] private Player currentPlayer; //todo: delete serializefield later
 
 
     void Start()
     {
-        
-
+        //load animal and food definition into the shop panel
         SOAnimalDefinition[] animalDefs = Resources.LoadAll<SOAnimalDefinition>("AnimalDefinitions");
         SOFoodDefinition[] foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions");
 
@@ -35,11 +33,15 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        currentPlayer.InPanel = true;
     }
+    private void OnDisable()
+    {
+        currentPlayer.InPanel = false;
+    }
+
 
     public void OnDecoratorClicked(Decorator selected)
     {
@@ -50,10 +52,7 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
         //}
     }
 
-    public Decorator DecoratorFactory(IGroupable grouop, Transform parent)
-    {
-        return null;
-    }
+    public Decorator DecoratorFactory(IGroupable grouop, Transform parent) { return null; }
 
     public Player GetPlayer() { return currentPlayer; }
 
