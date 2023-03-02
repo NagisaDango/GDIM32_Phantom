@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private List<AnimalInstance> animals = new List<AnimalInstance>();
-    [SerializeField] private List<FoodInstance> foods = new List<FoodInstance>();
+    public int playerIndex = 1;
+    [SerializeField] private static List<AnimalInstance> animals = new List<AnimalInstance>();
+    [SerializeField] private static List<FoodInstance> foods = new List<FoodInstance>();
 
     [SerializeField] private BackpackManager backpack;
 
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour
 
     public bool InPanel { get; set; } // still viewing panel
 
-
+    public GameStateManager gsm;
 
 
     [SerializeField] private Transform animalSpawnPos;
@@ -29,18 +30,18 @@ public class Player : MonoBehaviour
     //public int Corn { get; private set; }
     //public int Hay { get; private set; }
 
-    [SerializeField][Min(0)] private int money = 0;
-    [SerializeField][Min(0)] private int hay = 0;
-    [SerializeField][Min(0)] private int soybean = 0;
-    [SerializeField][Min(0)] private int insect = 0;
-    [SerializeField][Min(0)] private int carrot = 0;
-    [SerializeField][Min(0)] private int corn = 0;
+    [SerializeField][Min(0)] private static int money = 0;
+    [SerializeField][Min(0)] private static int hay = 0;
+    [SerializeField][Min(0)] private static int soybean = 0;
+    [SerializeField][Min(0)] private static int insect = 0;
+    [SerializeField][Min(0)] private static int carrot = 0;
+    [SerializeField][Min(0)] private static int corn = 0;
 
     public int GetMoney() { return money; }
 
-    public void SetMoney(int money) { this.money = money; }
+    public void SetMoney(int newMoney) { money = newMoney; }
 
-    public void AddMoney(int amount) { this.money += amount; }
+    public void AddMoney(int amount) { money += amount; }
 
     public void AddFoodCount(FoodType type, int amount)
     {
@@ -98,6 +99,8 @@ public class Player : MonoBehaviour
         animals.Add(animalInst);
 
         money -= animalDef.GetCost();
+
+        gsm.RefreshFarmForLocal();
     }
 
     public void BuyItem(SOFoodDefinition foodDef) // buy food
@@ -135,6 +138,8 @@ public class Player : MonoBehaviour
     {
         animals.Remove(animal);
         Destroy(animal.gameObject);
+
+        gsm.RefreshFarmForLocal();
     }
 
     public void StoreToFarm(AnimalInstance animal) //store the animals in inventory back to farm if the player is in farm
@@ -146,6 +151,8 @@ public class Player : MonoBehaviour
             animal.gameObject.SetActive(true);
             animal.CloseTriggerCollider();
         }
+
+        gsm.RefreshFarmForLocal();
     }
 
     //see if the player is in the farm or Shop range

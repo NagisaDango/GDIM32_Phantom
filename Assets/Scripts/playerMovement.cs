@@ -12,8 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private BackpackManager backpack;
 
-    
-
+    private Player player;
+    private void Start()
+    {
+        player = GetComponent<Player>();
+    }
 
     private void FixedUpdate()
     {
@@ -23,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        float hInput = Input.GetAxisRaw("Horizontal");
-        float vInput = Input.GetAxisRaw("Vertical");
+        float hInput = Input.GetAxisRaw("Horizontal" + player.playerIndex);
+        float vInput = Input.GetAxisRaw("Vertical" + player.playerIndex);
 
         //Method one using Translate():
         //dir = new Vector3(hInput, 0, vInput); 
@@ -45,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
 
         //limit force
         velocityChange = Vector3.ClampMagnitude(velocityChange, maxForce);
+
+        velocityChange.y = 0;
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
 

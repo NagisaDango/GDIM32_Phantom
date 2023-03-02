@@ -55,6 +55,9 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
         }
     }
 
+
+
+
     //public bool IsComposite() // For Later drafts
     //{
     //    return false;
@@ -79,5 +82,7 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     //    Debug.LogError("Should never be called");
     //    return new List<IGroupable>();
     //}
+
+
 }
     

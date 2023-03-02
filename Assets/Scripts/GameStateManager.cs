@@ -1,20 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //by Xinlin Li
 
 public class GameStateManager : MonoBehaviour
 {
+    public Transform canvas;
     [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject shopPanel_Left;
+    [SerializeField] private GameObject shopPanel_Right;
     [SerializeField] private GameObject farmPanel;
+    [SerializeField] private GameObject farmPanel_Left;
+    [SerializeField] private GameObject farmPanel_Right;
     [SerializeField] private GameObject displayPanel;
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject pausePanel;
-
-    [SerializeField] private Player player;
+    //[SerializeField] private Player player;
+    [SerializeField] private Player[] players = new Player[2];
 
     [SerializeField] private int moneypreset = 500;
+
+    private Dictionary<int, GameObject> shops;
+    private Dictionary<int, GameObject> farms;
+    private Dictionary<int, KeyCode> keys = new Dictionary<int, KeyCode>()
+    {
+        { 1,KeyCode.E },
+        { 2,KeyCode.Return}
+    };
 
     void Start()
     {
@@ -24,15 +39,31 @@ public class GameStateManager : MonoBehaviour
         inventoryPanel.SetActive(false);
         pausePanel.SetActive(false);
 
-        player.SetMoney(moneypreset);
+        players[0].SetMoney(moneypreset);
+
+
+        shops = new Dictionary<int, GameObject>{
+            { 1, shopPanel_Left},
+            { 2, shopPanel_Right}
+        };
+
+        farms = new Dictionary<int, GameObject>()
+        {
+            { 1, farmPanel_Left},
+            { 2, farmPanel_Right}
+        };
+
+
+
 
     }
 
-    void Update()
+
+    public void CheckPanelForSingle()
     {
-        if (player.InShop) //open the shop panel when player is near the shop
+        if (players[0].InShop) //open the shop panel when player is near the shop
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(keys[players[0].playerIndex]))
             {
                 if (inventoryPanel.activeSelf)
                     inventoryPanel.SetActive(false);
@@ -48,9 +79,9 @@ public class GameStateManager : MonoBehaviour
             shopPanel.SetActive(false);
         }
 
-        if (player.InFarm) //open the farm panel when player is near the farm
+        if (players[0].InFarm) //open the farm panel when player is near the farm
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(keys[players[0].playerIndex]))
             {
                 if (inventoryPanel.activeSelf)
                     inventoryPanel.SetActive(false);
@@ -65,6 +96,62 @@ public class GameStateManager : MonoBehaviour
         {
             farmPanel.SetActive(false);
         }
+    }
+
+    public void CheckPanelForLocal()
+    {
+        foreach (var p in players)
+        {
+
+            if (p.InShop) //open the shop panel when player is near the shop
+            {
+                if (Input.GetKeyDown(keys[p.playerIndex]))
+                {
+                    if (inventoryPanel.activeSelf)
+                        inventoryPanel.SetActive(false);
+
+                    if (!shops[p.playerIndex].activeSelf)
+                        shops[p.playerIndex].SetActive(true);
+                    else
+                        shops[p.playerIndex].SetActive(false);
+                }
+            }
+            else
+            {
+                
+                shops[p.playerIndex].SetActive(false);
+            }
+
+            if (p.InFarm) //open the farm panel when player is near the farm
+            {
+                if (Input.GetKeyDown(keys[p.playerIndex]))
+                {
+                    if (inventoryPanel.activeSelf)
+                        inventoryPanel.SetActive(false);
+
+                    if (!farms[p.playerIndex].activeSelf)
+                        farms[p.playerIndex].SetActive(true);
+                    else
+                        farms[p.playerIndex].SetActive(false);
+                }
+            }
+            else
+            {
+                farms[p.playerIndex].SetActive(false);
+            }
+
+        }
+    }
+
+
+    void Update()
+    {
+        if(players.Count() == 1)
+            CheckPanelForSingle();
+        else if (players.Count() == 2)
+            CheckPanelForLocal();
+        
+
 
         if (Input.GetKeyUp(KeyCode.C))//open and close inventory 
         {
@@ -141,4 +228,15 @@ public class GameStateManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void RefreshFarmForLocal()
+    {
+        if(players.Count() == 2)
+        {
+            farmPanel_Left.GetComponent<FarmManager>().RefreshFarmList();
+            farmPanel_Right.GetComponent<FarmManager>().RefreshFarmList();
+        }
+        
+    }
+
 }

@@ -19,11 +19,17 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
     public ToggleGroup toggleGroup;
     public ItemDecorator currentDecorator; // an reference for current selected decorator
 
+    public GameStateManager gsm;
 
     void OnEnable()
     {
         RefreshFarmList();
         currentPlayer.InPanel = true;
+    }
+
+    private void Update()
+    {
+        
     }
 
     void OnDisable() 
@@ -52,7 +58,11 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
         {
             ItemDecorator ad = Instantiate(AnimalStatsDecoratorPrefab, animalInfoParrent);
             ad.Initialize(animal, this);
+            ad.RefreshGrowSlider();
         }
+
+        
+
     }
 
     
@@ -77,6 +87,8 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
         toggleGroup.CleanToggleGroup();
 
         feedPanel.SetActive(false);
+
+        gsm.RefreshFarmForLocal();
 
     }
 
