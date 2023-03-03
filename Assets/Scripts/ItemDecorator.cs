@@ -93,6 +93,8 @@ public class ItemDecorator : Decorator
 
                 (displayManager as StoreManager).GetPlayer().BuyItem(FoodDef);
             }
+
+        print("buy");
     }
 
 

@@ -18,8 +18,12 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject displayPanel;
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject pausePanel;
-    //[SerializeField] private Player player;
-    [SerializeField] private Player[] players = new Player[2];
+
+    public Player playerPrefab;
+    public CameraController cc;
+
+    public List<Player> players = new List<Player>();
+    public List<Transform> playerSpawnPos = new List<Transform>();
 
     [SerializeField] private int moneypreset = 500;
 
@@ -31,6 +35,10 @@ public class GameStateManager : MonoBehaviour
         { 2,KeyCode.Return}
     };
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         shopPanel.SetActive(false);
@@ -38,9 +46,6 @@ public class GameStateManager : MonoBehaviour
         displayPanel.SetActive(true);
         inventoryPanel.SetActive(false);
         pausePanel.SetActive(false);
-
-        players[0].SetMoney(moneypreset);
-
 
         shops = new Dictionary<int, GameObject>{
             { 1, shopPanel_Left},
@@ -55,7 +60,49 @@ public class GameStateManager : MonoBehaviour
 
 
 
+       
+        for (int i = 0; i < GameManager._playerCount; i++)
+        {
+            Player go = Instantiate(playerPrefab, playerSpawnPos[i].position, Quaternion.identity);
+            go.playerIndex = i + 1;
+            players.Add(go);
+            cc.m_Targets.Add(go.transform);
+            print("GSM: " + go.transform.position);
+            players[i].SetMoney(moneypreset);
 
+            displayPanel.GetComponent<DisplayManager>().SetPlayer(go);
+
+            
+            if(GameManager._playerCount == 2)
+            {
+                shops[go.playerIndex].GetComponent<StoreManager>().SetPlayer(go);
+                farms[go.playerIndex].GetComponent<FarmManager>().SetPlayer(go);
+            }
+            else
+            {
+                shopPanel.GetComponent<StoreManager>().SetPlayer(go);
+                farmPanel.GetComponent<FarmManager>().SetPlayer(go);
+            }
+
+            //EventHandler.CallPlayerSpawnEvent(go);
+        }
+
+
+    }
+
+    private void OnEnable()
+    {
+        EventHandler.StartGameEvent += OnStartGameEvent;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.StartGameEvent -= OnStartGameEvent;
+    }
+
+    public void OnStartGameEvent(int playerCount)
+    {
+        print("GSM");
     }
 
 
@@ -63,7 +110,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (players[0].InShop) //open the shop panel when player is near the shop
         {
-            if (Input.GetKeyDown(keys[players[0].playerIndex]))
+            if (players[0].playerController.interactInput)
             {
                 if (inventoryPanel.activeSelf)
                     inventoryPanel.SetActive(false);
@@ -72,6 +119,8 @@ public class GameStateManager : MonoBehaviour
                     shopPanel.SetActive(true);
                 else
                     shopPanel.SetActive(false);
+
+                players[0].playerController.interactInput = false;
             }
         }
         else
@@ -81,7 +130,7 @@ public class GameStateManager : MonoBehaviour
 
         if (players[0].InFarm) //open the farm panel when player is near the farm
         {
-            if (Input.GetKeyDown(keys[players[0].playerIndex]))
+            if (players[0].playerController.interactInput)
             {
                 if (inventoryPanel.activeSelf)
                     inventoryPanel.SetActive(false);
@@ -90,6 +139,8 @@ public class GameStateManager : MonoBehaviour
                     farmPanel.SetActive(true);
                 else
                     farmPanel.SetActive(false);
+
+                players[0].playerController.interactInput = false;
             }
         }
         else
@@ -100,44 +151,54 @@ public class GameStateManager : MonoBehaviour
 
     public void CheckPanelForLocal()
     {
-        foreach (var p in players)
+        for (int i = 0; i < players.Count; i++) 
         {
+            var p = players[i];
+            GameObject shop = shops[p.playerIndex];
+            GameObject farm = farms[p.playerIndex];
 
             if (p.InShop) //open the shop panel when player is near the shop
             {
-                if (Input.GetKeyDown(keys[p.playerIndex]))
+                if (p.playerController.interactInput)
                 {
                     if (inventoryPanel.activeSelf)
                         inventoryPanel.SetActive(false);
 
+                    print(shop);
                     if (!shops[p.playerIndex].activeSelf)
                         shops[p.playerIndex].SetActive(true);
                     else
                         shops[p.playerIndex].SetActive(false);
+
+                    p.playerController.interactInput = false;
                 }
             }
             else
             {
-                
                 shops[p.playerIndex].SetActive(false);
             }
 
+
             if (p.InFarm) //open the farm panel when player is near the farm
             {
-                if (Input.GetKeyDown(keys[p.playerIndex]))
+                if (p.playerController.interactInput)
                 {
                     if (inventoryPanel.activeSelf)
                         inventoryPanel.SetActive(false);
 
-                    if (!farms[p.playerIndex].activeSelf)
-                        farms[p.playerIndex].SetActive(true);
+                    if (!farm.activeSelf)
+                        farm.SetActive(true);
                     else
-                        farms[p.playerIndex].SetActive(false);
+                        farm.SetActive(false);
+
+                    p.playerController.interactInput = false;
+
                 }
+
             }
             else
             {
-                farms[p.playerIndex].SetActive(false);
+                farm.SetActive(false);
             }
 
         }
@@ -228,6 +289,7 @@ public class GameStateManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
 
     public void RefreshFarmForLocal()
     {

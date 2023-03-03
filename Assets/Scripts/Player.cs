@@ -10,25 +10,15 @@ public class Player : MonoBehaviour
     [SerializeField] private static List<AnimalInstance> animals = new List<AnimalInstance>();
     [SerializeField] private static List<FoodInstance> foods = new List<FoodInstance>();
 
-    [SerializeField] private BackpackManager backpack;
-
     public bool InFarm { get; private set; } // in trigger area for Farm panel
     public bool InShop { get; private set; } // in trigger area for Ship panel
 
     public bool InPanel { get; set; } // still viewing panel
 
     public GameStateManager gsm;
+    public PlayerMovement playerController;
 
-
-    [SerializeField] private Transform animalSpawnPos;
-
-
-    //public int Money { get; private set; }    // use serilizeField first for easier in-enigne test 
-    //public int SoyBean { get; private set; }
-    //public int Insect { get; private set; }
-    //public int Carrot { get; private set; }
-    //public int Corn { get; private set; }
-    //public int Hay { get; private set; }
+    public Transform animalSpawnPos;
 
     [SerializeField][Min(0)] private static int money = 0;
     [SerializeField][Min(0)] private static int hay = 0;
@@ -36,6 +26,13 @@ public class Player : MonoBehaviour
     [SerializeField][Min(0)] private static int insect = 0;
     [SerializeField][Min(0)] private static int carrot = 0;
     [SerializeField][Min(0)] private static int corn = 0;
+
+    private void Start()
+    {
+        playerController = GetComponent<PlayerMovement>();
+        gsm = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
+        animalSpawnPos = GameObject.Find("AnimalSpawnPos").GetComponent<Transform>();
+    }
 
     public int GetMoney() { return money; }
 

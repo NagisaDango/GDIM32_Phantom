@@ -25,11 +25,7 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
     {
         RefreshFarmList();
         currentPlayer.InPanel = true;
-    }
-
-    private void Update()
-    {
-        
+        //EventHandler.PlayerSpawnEvent += OnPlayerSpawnEvent;
     }
 
     void OnDisable() 
@@ -37,14 +33,26 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
         sellPanel.SetActive(false);
         feedPanel.SetActive(false);
         currentPlayer.InPanel = false;
-
+        //EventHandler.PlayerSpawnEvent -= OnPlayerSpawnEvent;
     }
+    public void OnPlayerSpawnEvent(Player player)
+    {
+        currentPlayer = player;
+    }
+
+    private void Update()
+    {
+        
+    }
+
 
     public Decorator DecoratorFactory(IGroupable group, Transform parent) { return null; }
 
     public void OnDecoratorClicked(Decorator selected) { }
 
     public Player GetPlayer() { return currentPlayer; }
+
+    public void SetPlayer(Player player) { currentPlayer = player; }
 
     //reload the panel each time 
     public void RefreshFarmList() 

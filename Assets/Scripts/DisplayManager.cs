@@ -13,6 +13,8 @@ public class DisplayManager : MonoBehaviour
  
     void Update()
     {
+        if (!currentPlayer) return;
+
         //update info per frame.
         money.text = currentPlayer.GetMoney().ToString();
         soyBean.text = currentPlayer.GetFoodCount(FoodType.SoyBean).ToString();
@@ -20,7 +22,7 @@ public class DisplayManager : MonoBehaviour
         hay.text = currentPlayer.GetFoodCount(FoodType.Hay).ToString();
         corn.text = currentPlayer.GetFoodCount(FoodType.Corn).ToString();
         insect.text = currentPlayer.GetFoodCount(FoodType.Insect).ToString();
-
-
     }
+
+    public void SetPlayer(Player player) { currentPlayer = player; }
 }

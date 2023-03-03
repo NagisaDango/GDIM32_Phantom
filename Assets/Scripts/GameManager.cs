@@ -4,14 +4,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    bool inGame;
-    public GameObject playerPrefab;
+
+    public static int _playerCount;
+    public Player playerPrefab;
+
     // Start is called before the first frame update
-    void Start()
+
+    private void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
+        EventHandler.StartGameEvent += OnStartGameEvent;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.StartGameEvent -= OnStartGameEvent;
+    }
+
+    public void OnStartGameEvent(int playerCount)
+    {
+        _playerCount = playerCount;
     }
 
     // Update is called once per frame
@@ -22,21 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int playerCount)
     {
-        SceneManager.LoadScene(1);
-        print("dafs1");
 
-        InitializePlayer(playerCount);
-
-        print("dafs");
-    }
-
-    public void InitializePlayer(int playerCount)
-    {
-        for (int i = 0; i < playerCount; i++)
-        {
-            GameObject go = Instantiate(playerPrefab,playerPrefab.transform.position,playerPrefab.transform.rotation);
-            print(go.transform.position);
-        }
     }
 
 

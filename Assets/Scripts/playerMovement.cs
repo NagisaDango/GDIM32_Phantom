@@ -1,8 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.InputSystem.Users;
 //Wei Lun Tsai
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
@@ -13,6 +19,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private BackpackManager backpack;
 
     private Player player;
+
+    private Vector2 moveInput = Vector2.zero;
+    public  bool interactInput = false;
+    private bool placeAnimalInput = false;
+
     private void Start()
     {
         player = GetComponent<Player>();
@@ -22,21 +33,13 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
     }
-
-
+    
     private void Movement()
     {
-        float hInput = Input.GetAxisRaw("Horizontal" + player.playerIndex);
-        float vInput = Input.GetAxisRaw("Vertical" + player.playerIndex);
+        if (player.InPanel) return;
 
-        //Method one using Translate():
-        //dir = new Vector3(hInput, 0, vInput); 
-        //transform.Translate(dir.normalized * moveSpeed * Time.deltaTime);
-
-        //Method two using AddForce
-        //find targer velocity
         Vector3 currentVel = rb.velocity;
-        Vector3 targetVel = new Vector3(hInput, 0, vInput).normalized;
+        Vector3 targetVel = new Vector3(moveInput.x, 0, moveInput.y).normalized;
         targetVel *= moveSpeed;
 
         //align direction
@@ -55,6 +58,20 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        interactInput = context.action.IsPressed();
+    }
+    public void OnPlaceAnimal(InputAction.CallbackContext context)
+    {
+        placeAnimalInput = context.action.triggered;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         //if player trigger with animal and press E, get that animal and add it to the bag
@@ -64,5 +81,4 @@ public class PlayerMovement : MonoBehaviour
             backpack.AddItem(animal);
         }
     }
-
 }

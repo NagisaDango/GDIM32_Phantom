@@ -16,10 +16,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame(int playerCount)
     {
         SceneManager.LoadScene(1);
-        print("dafs1");
 
-        gm.InitializePlayer(playerCount);
-
-        print("dafs");
+        EventHandler.CallStartGameEvent(playerCount);
     }
 }

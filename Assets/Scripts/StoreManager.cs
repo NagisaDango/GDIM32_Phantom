@@ -35,13 +35,19 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
 
     private void OnEnable()
     {
+        //EventHandler.PlayerSpawnEvent += OnPlayerSpawnEvent;
         currentPlayer.InPanel = true;
     }
     private void OnDisable()
     {
+        //EventHandler.PlayerSpawnEvent -= OnPlayerSpawnEvent;
         currentPlayer.InPanel = false;
     }
 
+    public void OnPlayerSpawnEvent(Player player)
+    {
+        currentPlayer = player;
+    }
 
     public void OnDecoratorClicked(Decorator selected)
     {
@@ -55,5 +61,7 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
     public Decorator DecoratorFactory(IGroupable grouop, Transform parent) { return null; }
 
     public Player GetPlayer() { return currentPlayer; }
+
+    public void SetPlayer(Player player) { currentPlayer = player; }
 
 }
