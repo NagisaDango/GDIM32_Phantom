@@ -16,6 +16,12 @@ GameObject:
   - component: {fileID: 1976926835}
   - component: {fileID: 1976926841}
   - component: {fileID: 84420986399067800}
+  - component: {fileID: 1542953005327789525}
+  - component: {fileID: 2876810083642449569}
+  - component: {fileID: 2716713899582140925}
+  - component: {fileID: 8781924383467128975}
+  - component: {fileID: 9155246393141558642}
+  - component: {fileID: 5579955879114737279}
   m_Layer: 0
   m_Name: DuckWhite
   m_TagString: Animal
@@ -120,7 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bbbc18bc0d215f4585c756c7ea8a06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weight: 1
+  player: {fileID: 0}
+  playerReference: {fileID: 0}
 --- !u!54 &1976926835
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,5 +195,127 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 15, y: 2, z: 15}
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &1542953005327789525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fefcf6dd4fa80459fa7e2e89ceca01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 5579955879114737279}
+  startState: {fileID: 2716713899582140925}
+  currentState: {fileID: 0}
+--- !u!114 &2876810083642449569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e1dd42e84e12846a3494a4bcd5a15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 9155246393141558642}
+  - {fileID: 8781924383467128975}
+  - {fileID: 2716713899582140925}
+  urgentState: 0
+  minTime: 1
+  maxTime: 2
+  minIdleTime: 1
+  maxIdleTime: 3
+  canEnter: 0
+  canExit: 0
+--- !u!114 &2716713899582140925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e422542b26a9e4b99adf82bceced05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 9155246393141558642}
+  - {fileID: 8781924383467128975}
+  - {fileID: 2876810083642449569}
+  urgentState: 0
+  wanderRadius: 10
+--- !u!114 &8781924383467128975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444724fd0b1d72a4db2679e8f3512af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 9155246393141558642}
+  - {fileID: 2716713899582140925}
+  - {fileID: 2876810083642449569}
+  urgentState: 0
+  player: {fileID: 0}
+  canEnter: 0
+  canExit: 0
+  wolfInRange: 0
+  infarm: 0
+  thisAnimal: {fileID: 4032783741758600977}
+--- !u!114 &9155246393141558642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7971e10b65a06dd4a948b1b6fe3678bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 8781924383467128975}
+  - {fileID: 2716713899582140925}
+  - {fileID: 2876810083642449569}
+  urgentState: 0
+  wolf: {fileID: 0}
+  wolfInRange: 0
+  canEnter: 0
+  canExit: 0
+--- !u!195 &5579955879114737279
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522729216997060}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.29078192
+  m_Speed: 8
+  m_Acceleration: 1000
+  avoidancePriority: 50
+  m_AngularSpeed: 2000
+  m_StoppingDistance: 2.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.1938534
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

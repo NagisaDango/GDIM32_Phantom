@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
+using UnityEngine.AI;
 //Shengjie Zhang
 
 public class Player : MonoBehaviour
 {
     public int playerIndex = 1;
     [SerializeField] private static List<AnimalInstance> animals = new List<AnimalInstance>();
+    public AnimalInstance followingAnimals;
     [SerializeField] private static List<FoodInstance> foods = new List<FoodInstance>();
 
     [SerializeField] private BackpackManager backpack;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private Transform animalSpawnPos;
+    [SerializeField] private Transform debugPos;
 
 
     //public int Money { get; private set; }    // use serilizeField first for easier in-enigne test 
@@ -30,12 +33,18 @@ public class Player : MonoBehaviour
     //public int Corn { get; private set; }
     //public int Hay { get; private set; }
 
-    [SerializeField][Min(0)] private static int money = 0;
-    [SerializeField][Min(0)] private static int hay = 0;
-    [SerializeField][Min(0)] private static int soybean = 0;
+    [SerializeField][Min(0)] private static int money = 0; 
+    [SerializeField][Min(0)] private static int hay = 0; 
+    [SerializeField][Min(0)] private static int soybean = 0; 
     [SerializeField][Min(0)] private static int insect = 0;
     [SerializeField][Min(0)] private static int carrot = 0;
     [SerializeField][Min(0)] private static int corn = 0;
+
+    public int GetHay() { return hay; }
+    public int GetSoybean() { return soybean; }
+    public int GetInsect() { return insect; }
+    public int GetCarrot() { return carrot; }
+    public int GetCorn() { return corn; }
 
     public int GetMoney() { return money; }
 
@@ -142,16 +151,33 @@ public class Player : MonoBehaviour
         gsm.RefreshFarmForLocal();
     }
 
-    public void StoreToFarm(AnimalInstance animal) //store the animals in inventory back to farm if the player is in farm
-    {
-        if (InFarm)
-        {
-            animals.Add(animal);
-            animal.transform.position = animalSpawnPos.position;
-            animal.gameObject.SetActive(true);
-            animal.CloseTriggerCollider();
-        }
+    private bool alreadyInList;
 
+    public void StoreToFarm(AnimalInstance animal) //store the animals following back to farm if the player is in farm
+    {
+        if(InFarm&&animal!=null)
+        {
+            alreadyInList = false;
+            foreach(AnimalInstance following in animals)
+            {
+                //test if the animal is already in farm
+                if(following==animal)
+                {
+                    alreadyInList = true;
+                    return;
+                }
+            }
+            //if the animal is already in the list, dont add it to the list
+            if(!alreadyInList) 
+            {
+                animals.Add(animal);
+                animal.GetComponent<NavMeshAgent>().Warp(new Vector3(animalSpawnPos.position.x, animalSpawnPos.position.y, animalSpawnPos.position.z));
+                animal.GetComponent<AnimalFollow>().enabled = false;
+                animal.transform.position = animalSpawnPos.position;
+                animal.CloseTriggerCollider();
+            }
+            followingAnimals = null;
+        }
         gsm.RefreshFarmForLocal();
     }
 
@@ -176,6 +202,10 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Shop"))
         {
             InShop = false;
+        }
+        if(other.gameObject.CompareTag("Animal"))
+        {
+            followingAnimals = null;
         }
     }
 }

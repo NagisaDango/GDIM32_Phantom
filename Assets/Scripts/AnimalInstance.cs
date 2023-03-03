@@ -11,6 +11,10 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
     public Sprite Icon { get; private set; }
     public SOAnimalDefinition.AnimalType Type { get; private set; }
     public int AdultGrowthValue { get; set; }
+    [SerializeField] protected GameObject player; //the player object to follow
+    [SerializeField] protected Player playerReference; //the reference to the Player script
+    public bool canFollow; //can follow player
+    public bool isFollowing; //is following a player
 
     private int weight; //the weight it count for the package
     public int Weight { get { return weight; } }
@@ -54,6 +58,35 @@ public abstract class AnimalInstance : MonoBehaviour, IGroupable
                 collider.enabled = false;
         }
     }
+
+    //When collide with wolf, destroy this object
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wolf"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    //if player is not folllowed by any animal, make this animal the following animal
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            player = other.gameObject;
+            playerReference = player.GetComponent<Player>();
+            if (playerReference.followingAnimals == null && isFollowing)
+                playerReference.followingAnimals = this; 
+        }
+    }
+    //stop follow the player when player not in range
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerReference.followingAnimals = null;
+        }
+    }
+
 
 
 

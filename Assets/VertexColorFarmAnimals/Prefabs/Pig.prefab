@@ -16,6 +16,12 @@ GameObject:
   - component: {fileID: 288762721}
   - component: {fileID: 288762727}
   - component: {fileID: 7141646464410828172}
+  - component: {fileID: 7798535923956905572}
+  - component: {fileID: 8584139638927613565}
+  - component: {fileID: 1540219450470376436}
+  - component: {fileID: 4912594481646508524}
+  - component: {fileID: 1790028446498247299}
+  - component: {fileID: 6066472143744472230}
   m_Layer: 0
   m_Name: Pig
   m_TagString: Animal
@@ -120,7 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e424b7736159cc4eb0ea088318044f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weight: 2
+  player: {fileID: 0}
+  playerReference: {fileID: 0}
 --- !u!54 &288762721
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,5 +195,127 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 2, z: 3}
+  m_Size: {x: 15, y: 2, z: 15}
   m_Center: {x: 0.000000014901161, y: 0.34174016, z: 0.11479871}
+--- !u!114 &7798535923956905572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fefcf6dd4fa80459fa7e2e89ceca01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 6066472143744472230}
+  startState: {fileID: 1540219450470376436}
+  currentState: {fileID: 0}
+--- !u!114 &8584139638927613565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e1dd42e84e12846a3494a4bcd5a15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 1790028446498247299}
+  - {fileID: 4912594481646508524}
+  - {fileID: 1540219450470376436}
+  urgentState: 0
+  minTime: 1
+  maxTime: 2
+  minIdleTime: 1
+  maxIdleTime: 3
+  canEnter: 0
+  canExit: 0
+--- !u!114 &1540219450470376436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e422542b26a9e4b99adf82bceced05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 1790028446498247299}
+  - {fileID: 4912594481646508524}
+  - {fileID: 8584139638927613565}
+  urgentState: 0
+  wanderRadius: 10
+--- !u!114 &4912594481646508524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444724fd0b1d72a4db2679e8f3512af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 1790028446498247299}
+  - {fileID: 1540219450470376436}
+  - {fileID: 8584139638927613565}
+  urgentState: 0
+  player: {fileID: 0}
+  canEnter: 0
+  canExit: 0
+  wolfInRange: 0
+  infarm: 0
+  thisAnimal: {fileID: 7859347306555990131}
+--- !u!114 &1790028446498247299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7971e10b65a06dd4a948b1b6fe3678bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 4912594481646508524}
+  - {fileID: 1540219450470376436}
+  - {fileID: 8584139638927613565}
+  urgentState: 0
+  wolf: {fileID: 0}
+  wolfInRange: 0
+  canEnter: 0
+  canExit: 0
+--- !u!195 &6066472143744472230
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055064919166404}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.7117586
+  m_Speed: 8
+  m_Acceleration: 2000
+  avoidancePriority: 50
+  m_AngularSpeed: 2000
+  m_StoppingDistance: 2.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.3812923
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

@@ -65,8 +65,8 @@ public class GameStateManager : MonoBehaviour
         {
             if (Input.GetKeyDown(keys[players[0].playerIndex]))
             {
-                if (inventoryPanel.activeSelf)
-                    inventoryPanel.SetActive(false);
+                //if (inventoryPanel.activeSelf)
+                //    inventoryPanel.SetActive(false);
 
                 if (!shopPanel.activeSelf)
                     shopPanel.SetActive(true);
@@ -83,8 +83,8 @@ public class GameStateManager : MonoBehaviour
         {
             if (Input.GetKeyDown(keys[players[0].playerIndex]))
             {
-                if (inventoryPanel.activeSelf)
-                    inventoryPanel.SetActive(false);
+               // if (inventoryPanel.activeSelf)
+              //      inventoryPanel.SetActive(false);
 
                 if (!farmPanel.activeSelf)
                     farmPanel.SetActive(true);
@@ -107,8 +107,8 @@ public class GameStateManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(keys[p.playerIndex]))
                 {
-                    if (inventoryPanel.activeSelf)
-                        inventoryPanel.SetActive(false);
+                   // if (inventoryPanel.activeSelf)
+                   //     inventoryPanel.SetActive(false);
 
                     if (!shops[p.playerIndex].activeSelf)
                         shops[p.playerIndex].SetActive(true);
@@ -119,15 +119,15 @@ public class GameStateManager : MonoBehaviour
             else
             {
                 
-                shops[p.playerIndex].SetActive(false);
+                //shops[p.playerIndex].SetActive(false);
             }
 
             if (p.InFarm) //open the farm panel when player is near the farm
             {
                 if (Input.GetKeyDown(keys[p.playerIndex]))
                 {
-                    if (inventoryPanel.activeSelf)
-                        inventoryPanel.SetActive(false);
+                    //if (inventoryPanel.activeSelf)
+                    //    inventoryPanel.SetActive(false);
 
                     if (!farms[p.playerIndex].activeSelf)
                         farms[p.playerIndex].SetActive(true);
@@ -160,11 +160,12 @@ public class GameStateManager : MonoBehaviour
                 farmPanel.SetActive(false);
                 shopPanel.SetActive(false);
             }
-
+            /*
             if (!inventoryPanel.activeSelf)
                 inventoryPanel.SetActive(true);
             else
                 inventoryPanel.SetActive(false);
+            */
         }
 
         if (Input.GetKeyUp(KeyCode.Escape))//use escape to close the active panel if any of them are open
@@ -179,11 +180,12 @@ public class GameStateManager : MonoBehaviour
                 farmPanel.SetActive(false);
                 return;
             }
+            /*
             else if (inventoryPanel.activeSelf)
             {
                 inventoryPanel.SetActive(false);
                 return;
-            }
+            }*/
 
 
 
@@ -200,7 +202,16 @@ public class GameStateManager : MonoBehaviour
 
         }
 
-
+        //if player 1 in farm range and press c, send the animal back to farm
+        if (Input.GetKeyUp(KeyCode.C) && players[0].InFarm)
+        {
+            players[0].StoreToFarm(players[0].followingAnimals);
+        }
+        //if player 2 in farm range and press right control, send the animal back to farm
+        if (Input.GetKeyUp(KeyCode.RightControl)&&players[1].InFarm)
+        {
+            players[1].StoreToFarm(players[1].followingAnimals);
+        }
     }
 
     public void PauseGame()

@@ -52,17 +52,16 @@ public class PlayerMovement : MonoBehaviour
         velocityChange.y = 0;
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
-
-
     }
     private void OnTriggerStay(Collider other)
     {
+        /*
         //if player trigger with animal and press E, get that animal and add it to the bag
         if (other.gameObject.tag.Equals("Animal") && Input.GetKey(KeyCode.E))
         {
             AnimalInstance animal = other.gameObject.GetComponent<AnimalInstance>();
             backpack.AddItem(animal);
-        }
+        }*/
     }
 
 }
