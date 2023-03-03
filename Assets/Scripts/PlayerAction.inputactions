@@ -113,6 +113,28 @@
                 },
                 {
                     "name": "",
+                    "id": "a81b5ea4-09ab-474d-ae94-6529f27abb0b",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PlaceAnimal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04d03ba2-ab84-40b8-8dc2-0859c124dbd9",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PlaceAnimal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "469726e1-b2a5-417b-ad9b-13f1ff7515bf",
                     "path": "<Keyboard>/e",
                     "interactions": "",

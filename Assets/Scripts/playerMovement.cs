@@ -8,7 +8,6 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem.Users;
 //Wei Lun Tsai
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
@@ -21,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private Player player;
 
     private Vector2 moveInput = Vector2.zero;
-    public  bool interactInput = false;
-    private bool placeAnimalInput = false;
+    public bool interactInput = false;
+    public bool placeAnimalInput = false;
 
     private void Start()
     {

@@ -35,10 +35,7 @@ public class GameStateManager : MonoBehaviour
         { 2,KeyCode.Return}
     };
 
-    private void Awake()
-    {
-        
-    }
+
     void Start()
     {
         shopPanel.SetActive(false);
@@ -84,27 +81,10 @@ public class GameStateManager : MonoBehaviour
                 farmPanel.GetComponent<FarmManager>().SetPlayer(go);
             }
 
-            //EventHandler.CallPlayerSpawnEvent(go);
         }
 
 
     }
-
-    private void OnEnable()
-    {
-        EventHandler.StartGameEvent += OnStartGameEvent;
-    }
-
-    private void OnDisable()
-    {
-        EventHandler.StartGameEvent -= OnStartGameEvent;
-    }
-
-    public void OnStartGameEvent(int playerCount)
-    {
-        print("GSM");
-    }
-
 
     public void CheckPanelForSingle()
     {
@@ -204,30 +184,12 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         if(players.Count() == 1)
             CheckPanelForSingle();
         else if (players.Count() == 2)
             CheckPanelForLocal();
-        
-
-
-        if (Input.GetKeyUp(KeyCode.C))//open and close inventory 
-        {
-            if (farmPanel.activeSelf || shopPanel.activeSelf)
-            {
-                farmPanel.SetActive(false);
-                shopPanel.SetActive(false);
-            }
-            /*
-            if (!inventoryPanel.activeSelf)
-                inventoryPanel.SetActive(true);
-            else
-                inventoryPanel.SetActive(false);
-            */
-        }
 
         if (Input.GetKeyUp(KeyCode.Escape))//use escape to close the active panel if any of them are open
         {
@@ -241,14 +203,6 @@ public class GameStateManager : MonoBehaviour
                 farmPanel.SetActive(false);
                 return;
             }
-            /*
-            else if (inventoryPanel.activeSelf)
-            {
-                inventoryPanel.SetActive(false);
-                return;
-            }*/
-
-
 
             if (!pausePanel.activeSelf)//open pause meny
             {
@@ -263,16 +217,30 @@ public class GameStateManager : MonoBehaviour
 
         }
 
-        //if player 1 in farm range and press c, send the animal back to farm
-        if (Input.GetKeyUp(KeyCode.C) && players[0].InFarm)
+
+        if (players.Count() == 1)
         {
-            players[0].StoreToFarm(players[0].followingAnimals);
+            //if player 1 in farm range and press c, send the animal back to farm
+            if (players[0].playerController.placeAnimalInput && players[0].InFarm)
+            {
+                players[0].StoreToFarm(players[0].followingAnimals);
+            }
         }
-        //if player 2 in farm range and press right control, send the animal back to farm
-        if (Input.GetKeyUp(KeyCode.RightControl)&&players[1].InFarm)
+
+        else if (players.Count() == 2)
         {
-            players[1].StoreToFarm(players[1].followingAnimals);
+            //if player 1 in farm range and press c, send the animal back to farm
+            if (players[0].playerController.placeAnimalInput && players[0].InFarm)
+            {
+                players[0].StoreToFarm(players[0].followingAnimals);
+            }
+            //if player 2 in farm range and press right control, send the animal back to farm
+            if (players[1].playerController.placeAnimalInput && players[1].InFarm)
+            {
+                players[1].StoreToFarm(players[1].followingAnimals);
+            }
         }
+
     }
 
     public void PauseGame()
