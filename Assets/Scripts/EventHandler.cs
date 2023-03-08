@@ -17,4 +17,16 @@ public static class EventHandler
         PlayerSpawnEvent?.Invoke(player);
     }
 
+    public static event Action<FarmManager> FeedClickedEvent;
+    public static void CallFeedClickedEvent(FarmManager manager)
+    {
+        FeedClickedEvent?.Invoke(manager);
+    }
+
+    public static event Action<FarmManager> SellClickedEvent;
+    public static void CallSellClickedEvent(FarmManager manager)
+    {
+        SellClickedEvent?.Invoke(manager);
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 //by Shengjie Zhang
 
@@ -18,7 +19,7 @@ public class ItemDecorator : Decorator
     [SerializeField] private TMP_Text itemtype;
     [SerializeField] private ItemType type;
     [SerializeField] private Slider slider;
-    [SerializeField] private Toggle toggleChoicePrefab;
+    [SerializeField] private MyToggle toggleChoicePrefab;
 
     private AnimalInstance AnimalInst;
     public SOAnimalDefinition AnimalDef { get; set; }
@@ -27,7 +28,7 @@ public class ItemDecorator : Decorator
     //public Button btn;
     private SOFoodDefinition[] foodDefs;
 
-    void Start()
+    void Awake()
     {
         foodDefs = Resources.LoadAll<SOFoodDefinition>("FoodDefinitions"); // load food definitions
     }
@@ -93,15 +94,14 @@ public class ItemDecorator : Decorator
 
                 (displayManager as StoreManager).GetPlayer().BuyItem(FoodDef);
             }
-
-        print("buy");
     }
 
 
     public void OnFeedBtnClicked(Decorator decorator) //for pressign Feed Button
     {
-        //(displayManager as FarmManager).feedPanel.SetActive(true); // move to last line to aviod conflict
-        (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
+        FarmManager farmManager = (displayManager as FarmManager);
+
+        farmManager.currentDecorator = decorator as ItemDecorator;
 
         foreach(FoodType type in AnimalInst.PreferedFood)
         {
@@ -109,20 +109,76 @@ public class ItemDecorator : Decorator
             {
                 if (type == t.GetFoodType())
                 {
-                    if ((displayManager as FarmManager).GetPlayer().GetFoodCount(type) <= 0) continue; // continue if having no corresponding food
+                    if (farmManager.GetPlayer().GetFoodCount(type) <= 0) continue; // continue if having no corresponding food
 
-                    Toggle go = Instantiate(toggleChoicePrefab, (displayManager as FarmManager).toggleGroup.transform);
+                    MyToggle go = Instantiate(toggleChoicePrefab, farmManager.toggleGroup.transform);
 
                     go.SetIcon(t.GetIcon());
+
+                    //Toggle go = Instantiate(toggleChoicePrefab, (displayManager as FarmManager).toggleGroup.transform);
+                    //go.transform.GetChild(1).GetComponent<Image>().sprite = t.GetIcon();
+                    ////go.targetGraphic as Image = t.GetIcon();
+                    //go.group = (displayManager as FarmManager).toggleGroup;
+
                     go.GetComponent<FoodChoice>().SetFoodDef(t);
+
                 }
             }
         }
-        (displayManager as FarmManager).feedPanel.SetActive(true);
+
+        Transform toggleTrans = farmManager.toggleGroup.transform;
+        Button confirmBtn = farmManager.feedPanel.transform.Find("ConfirmBtn").GetComponent<Button>();
+        Button cancelBtn = farmManager.feedPanel.transform.Find("CancelBtn").GetComponent<Button>();
+        Navigation customNav = new Navigation();
+        customNav.mode = Navigation.Mode.Explicit;
+
+        for (int i = 0; i < toggleTrans.childCount; i++)
+        {
+            ResetNavigation(ref customNav);
+            if (i != 0)
+            {
+                customNav.selectOnLeft = toggleTrans.GetChild(i - 1).GetComponent<MyToggle>();
+            }
+
+            if(i != toggleTrans.childCount - 1)
+            {
+                customNav.selectOnRight = toggleTrans.GetChild(i + 1).GetComponent<MyToggle>();
+            }
+
+            customNav.selectOnDown = confirmBtn;
+            toggleTrans.GetChild(i).GetComponent<MyToggle>().navigation = customNav;
+
+        }
+
+        if(toggleTrans.childCount > 0)
+        {
+            ResetNavigation(ref customNav);
+            customNav.selectOnUp = toggleTrans.GetChild(0).GetComponent<MyToggle>();
+            customNav.selectOnRight = cancelBtn;
+            confirmBtn.navigation = customNav;
+
+            ResetNavigation(ref customNav);
+            customNav.selectOnUp = toggleTrans.GetChild(toggleTrans.childCount-1).GetComponent<MyToggle>();
+            customNav.selectOnLeft = confirmBtn;
+            cancelBtn.navigation = customNav;
+        }
+
+        farmManager.feedPanel.SetActive(true);
+
+        EventHandler.CallFeedClickedEvent(farmManager);
+    }
+    public void ResetNavigation(ref Navigation nav)
+    {
+        nav = new Navigation();
+        nav.mode = Navigation.Mode.Explicit;
+
     }
 
     public void OnSellBtnClicked(Decorator decorator) //for pressign Sell Button
     {
+        FarmManager farmManager = (displayManager as FarmManager);
+        print("sell btn:    " + GameObject.Find("EventSystem").GetComponent<MultiplayerEventSystem>().currentSelectedGameObject);
+        print("sell btn:    " + GameObject.Find("EventSystem_Multi").GetComponent<MultiplayerEventSystem>().currentSelectedGameObject);
         if(AnimalInst.GetGrowthRate() < 1) return;
 
         (displayManager as FarmManager).sellPanel.SetActive(true);
@@ -130,6 +186,7 @@ public class ItemDecorator : Decorator
 
         (displayManager as FarmManager).currentDecorator = decorator as ItemDecorator;
 
+        EventHandler.CallSellClickedEvent(farmManager);
     }
 
     public AnimalInstance GetAnimalInst() { return AnimalInst; }

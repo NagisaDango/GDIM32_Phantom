@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -11,13 +14,13 @@ using UnityEngine.InputSystem.Users;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
-    private Vector3 dir;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float maxForce;
 
-    [SerializeField] private BackpackManager backpack;
 
     private Player player;
+    private PlayerInput playerInput;
+   
 
     private Vector2 moveInput = Vector2.zero;
     public bool interactInput = false;
@@ -26,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
+        playerInput = GetComponent<PlayerInput>();
+
+
     }
 
     private void FixedUpdate()
@@ -69,14 +75,4 @@ public class PlayerMovement : MonoBehaviour
         placeAnimalInput = context.action.triggered;
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        /*
-        //if player trigger with animal and press E, get that animal and add it to the bag
-        if (other.gameObject.tag.Equals("Animal") && Input.GetKey(KeyCode.E))
-        {
-            AnimalInstance animal = other.gameObject.GetComponent<AnimalInstance>();
-            backpack.AddItem(animal);
-        }*/
-    }
 }

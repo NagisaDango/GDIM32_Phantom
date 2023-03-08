@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 //by Yiran Luo
 
-public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class MyToggle : Selectable, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     //The build-in Toggle and Toggle Group do not support selecting only one from multiple toggles
     //So, we implement the Toggle function here
@@ -18,7 +18,8 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     [SerializeField] private Color disabledColor;
     [SerializeField] private UnityEvent onSelect;
 
-    public ToggleGroup toggleGroup;
+    public MyToggleGroup toggleGroup;
+
 
     private bool isSelected = false;
     public bool IsSelected => isSelected;
@@ -83,6 +84,10 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         }
         else
         {
+            if (toggleGroup)
+            {
+                toggleGroup.SetCurrentlySelected(this);
+            }
             image.color = normalColor;
         }
     }
@@ -102,7 +107,7 @@ public class Toggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     public void SetIcon(Sprite icon)
     {
-        transform.GetChild(0).GetComponent<Image>().sprite = icon;
+        transform.Find("Icon").GetComponent<Image>().sprite = icon;
     }
 }
 

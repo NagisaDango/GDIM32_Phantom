@@ -154,8 +154,10 @@ MonoBehaviour:
   followingAnimals: {fileID: 0}
   gsm: {fileID: 0}
   playerController: {fileID: 9016388346704269282}
+  playerInput: {fileID: 0}
   animalSpawnPos: {fileID: 0}
   debugPos: {fileID: 0}
+  eventSystems: []
 --- !u!114 &9016388346704269282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +175,7 @@ MonoBehaviour:
   maxForce: 10
   backpack: {fileID: 0}
   interactInput: 0
+  placeAnimalInput: 0
 --- !u!114 &1580111652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +216,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 816d155f-92ee-4439-9809-1f56e133ed38
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualSenseGamepadHID/leftStick]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9016388346704269282}
@@ -229,19 +232,35 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 9cb278da-c557-4079-8d2f-63b8fc8cd07f
-    m_ActionName: Player/Fire[/Mouse/leftButton]
+    m_ActionName: Player/Interact[/Keyboard/e,/DualSenseGamepadHID/buttonEast,/DualSenseGamepadHID/buttonNorth,/DualSenseGamepadHID/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9016388346704269282}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnPlaceAnimal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bb9b2e46-94e5-470e-97d6-5fa412dfdb27
+    m_ActionName: Player/PlaceAnimal[/Keyboard/space,/DualSenseGamepadHID/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 4c16286a-0d0a-41fe-b22c-f9823a781a71
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: UI/Navigate[/DualSenseGamepadHID/leftStick/up,/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID/leftStick/down,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID/leftStick/left,/DualSenseGamepadHID/rightStick/left,/DualSenseGamepadHID/leftStick/right,/DualSenseGamepadHID/rightStick/right,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/DualSenseGamepadHID/dpad]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 8510be88-2407-4535-a9a0-4b00b844e9fc
-    m_ActionName: UI/Submit[/Keyboard/enter]
+    m_ActionName: UI/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 5c9fa49b-ecad-4cfa-a3fc-e3906358d7d9
-    m_ActionName: UI/Cancel[/Keyboard/escape]
+    m_ActionName: UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 70f2c5e9-59a0-4a20-af49-845df7b71946
@@ -270,22 +289,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ba21a1be-433e-4826-9d78-0511fb2e9e9c
     m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9016388346704269282}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnPlaceAnimal
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: bb9b2e46-94e5-470e-97d6-5fa412dfdb27
-    m_ActionName: Player/PlaceAnimal[/Keyboard/space,/Keyboard/rightShift]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

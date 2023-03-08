@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 //by Yiran Luo
 
-public class ToggleGroup : MonoBehaviour
+public class MyToggleGroup : MonoBehaviour
 {
-    [SerializeField] private Toggle lastSelectedToggle;
-    [SerializeField] private Toggle currentSelectedToggle;
+    [SerializeField] private MyToggle lastSelectedToggle;
+    [SerializeField] private MyToggle currentSelectedToggle;
 
-    [SerializeField] private Toggle[] toggles;
+    [SerializeField] private MyToggle[] toggles;
+    public MultiplayerEventSystem eventSys;
 
     private void OnEnable()
     {
-        toggles = GetComponentsInChildren<Toggle>();
+        toggles = GetComponentsInChildren<MyToggle>();
         for (int i = 0; i < toggles.Length; i++)
         {
             toggles[i].toggleGroup = this;
@@ -25,9 +28,49 @@ public class ToggleGroup : MonoBehaviour
         CleanToggleGroup();
     }
 
+    private void Update()
+    {
+        if (IsAnyToggleSelected())
+        {
+            MyToggle toggle = eventSys.currentSelectedGameObject.GetComponent<MyToggle>();
+
+            if(lastSelectedToggle != toggle)
+            {
+                if (toggle.IsSelected)
+                {
+                    toggle.OnDeselect();
+                }
+                else
+                {
+                    toggle.SetSelected(true);
+                }
+            }
+            else
+            {
+
+            }
+            lastSelectedToggle = toggle;
+        }
+
+
+    }
+
+    public bool IsAnyToggleSelected()
+    {
+        foreach (var toggle in toggles)
+        {
+            if (eventSys.currentSelectedGameObject == toggle.gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void CleanToggleGroup()
     {
-        lastSelectedToggle = null;
+        //lastSelectedToggle = null;
         currentSelectedToggle = null;
         toggles = null;
 
@@ -39,14 +82,18 @@ public class ToggleGroup : MonoBehaviour
     }
 
 
-    public void SetCurrentlySelected(Toggle value)
+    public void SetCurrentlySelected(MyToggle value)
     {
         if (currentSelectedToggle != null)
         {
             if (currentSelectedToggle != value)
             {
                 currentSelectedToggle.SetSelected(false);
-                lastSelectedToggle = currentSelectedToggle;
+            }
+            else
+            {
+                currentSelectedToggle = null;
+                return;
             }
         }
         currentSelectedToggle = value;
@@ -56,7 +103,6 @@ public class ToggleGroup : MonoBehaviour
     {
         if (currentSelectedToggle != null)
         {
-            lastSelectedToggle = currentSelectedToggle;
             currentSelectedToggle = null;
         }
 
@@ -66,7 +112,7 @@ public class ToggleGroup : MonoBehaviour
         }
     }
 
-    public Toggle GetCurrentToggle()
+    public MyToggle GetCurrentToggle()
     {
         return currentSelectedToggle;
     }

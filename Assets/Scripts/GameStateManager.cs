@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 //by Xinlin Li
 
 public class GameStateManager : MonoBehaviour
@@ -16,33 +21,38 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject farmPanel_Left;
     [SerializeField] private GameObject farmPanel_Right;
     [SerializeField] private GameObject displayPanel;
-    [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject winPanel;
+
 
     public Player playerPrefab;
     public CameraController cc;
-
+    public MultiplayerEventSystem eventsys;
     public List<Player> players = new List<Player>();
     public List<Transform> playerSpawnPos = new List<Transform>();
+    public List<MultiplayerEventSystem> eventSystems = new List<MultiplayerEventSystem>();
 
     [SerializeField] private int moneypreset = 500;
+    [SerializeField] private int targetMoney = 1000;
+
 
     private Dictionary<int, GameObject> shops;
     private Dictionary<int, GameObject> farms;
-    private Dictionary<int, KeyCode> keys = new Dictionary<int, KeyCode>()
-    {
-        { 1,KeyCode.E },
-        { 2,KeyCode.Return}
-    };
+    private Dictionary<int, string> schemes;
 
 
     void Start()
     {
+        Time.timeScale = 1;
         shopPanel.SetActive(false);
+        shopPanel_Left.SetActive(false);
+        shopPanel_Right.SetActive(false);
         farmPanel.SetActive(false);
+        farmPanel_Left.SetActive(false);
+        farmPanel_Right.SetActive(false);
         displayPanel.SetActive(true);
-        inventoryPanel.SetActive(false);
         pausePanel.SetActive(false);
+        winPanel.SetActive(false);
 
         shops = new Dictionary<int, GameObject>{
             { 1, shopPanel_Left},
@@ -55,32 +65,51 @@ public class GameStateManager : MonoBehaviour
             { 2, farmPanel_Right}
         };
 
+        schemes = new Dictionary<int, string>()
+        {
+            { 1, "Keyboard&Mouse"},
+            { 2, "Gamepad"}
+        };
 
+        Player go = null;
+        InputActionAsset module = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction.inputactions", typeof(InputActionAsset));
+        InputActionAsset module2 = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction_Multi.inputactions", typeof(InputActionAsset));
 
-       
         for (int i = 0; i < GameManager._playerCount; i++)
         {
-            Player go = Instantiate(playerPrefab, playerSpawnPos[i].position, Quaternion.identity);
+            go = Instantiate(playerPrefab, playerSpawnPos[i].position, Quaternion.identity);
             go.playerIndex = i + 1;
             players.Add(go);
             cc.m_Targets.Add(go.transform);
-            print("GSM: " + go.transform.position);
             players[i].SetMoney(moneypreset);
 
             displayPanel.GetComponent<DisplayManager>().SetPlayer(go);
 
-            
-            if(GameManager._playerCount == 2)
-            {
-                shops[go.playerIndex].GetComponent<StoreManager>().SetPlayer(go);
-                farms[go.playerIndex].GetComponent<FarmManager>().SetPlayer(go);
-            }
-            else
-            {
-                shopPanel.GetComponent<StoreManager>().SetPlayer(go);
-                farmPanel.GetComponent<FarmManager>().SetPlayer(go);
-            }
 
+            shops[go.playerIndex].GetComponent<StoreManager>().SetPlayer(go);
+            farms[go.playerIndex].GetComponent<FarmManager>().SetPlayer(go);
+
+            go.playerInput.defaultControlScheme = schemes[go.playerIndex];
+            go.playerInput.neverAutoSwitchControlSchemes = true;
+
+            if (i == 0)
+            {
+                go.playerInput.actions = module;
+                go.playerInput.uiInputModule = eventSystems[i].GetComponent<InputSystemUIInputModule>();
+            }
+            else if (i == 1)
+            {
+                go.playerInput.actions = module2;
+                go.playerInput.uiInputModule = eventSystems[i].GetComponent<InputSystemUIInputModule>();
+            }
+        }
+
+
+        if (GameManager._playerCount == 1) 
+        {
+            shopPanel.GetComponent<StoreManager>().SetPlayer(go);
+            farmPanel.GetComponent<FarmManager>().SetPlayer(go);
+            go.playerInput.neverAutoSwitchControlSchemes = false;
         }
 
 
@@ -92,9 +121,6 @@ public class GameStateManager : MonoBehaviour
         {
             if (players[0].playerController.interactInput)
             {
-                //if (inventoryPanel.activeSelf)
-                //    inventoryPanel.SetActive(false);
-
                 if (!shopPanel.activeSelf)
                     shopPanel.SetActive(true);
                 else
@@ -112,9 +138,6 @@ public class GameStateManager : MonoBehaviour
         {
             if (players[0].playerController.interactInput)
             {
-               // if (inventoryPanel.activeSelf)
-              //      inventoryPanel.SetActive(false);
-
                 if (!farmPanel.activeSelf)
                     farmPanel.SetActive(true);
                 else
@@ -141,21 +164,18 @@ public class GameStateManager : MonoBehaviour
             {
                 if (p.playerController.interactInput)
                 {
-                   // if (inventoryPanel.activeSelf)
-                   //     inventoryPanel.SetActive(false);
 
-                    print(shop);
-                    if (!shops[p.playerIndex].activeSelf)
-                        shops[p.playerIndex].SetActive(true);
+                    if (!shop.activeSelf)
+                        shop.SetActive(true);
                     else
-                        shops[p.playerIndex].SetActive(false);
+                        shop.SetActive(false);
 
                     p.playerController.interactInput = false;
                 }
             }
             else
             {
-                shops[p.playerIndex].SetActive(false);
+                shop.SetActive(false);
             }
 
 
@@ -163,8 +183,6 @@ public class GameStateManager : MonoBehaviour
             {
                 if (p.playerController.interactInput)
                 {
-                    //if (inventoryPanel.activeSelf)
-                    //    inventoryPanel.SetActive(false);
 
                     if (!farm.activeSelf)
                         farm.SetActive(true);
@@ -184,9 +202,22 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+
+
     void Update()
     {
-        if(players.Count() == 1)
+        if (players[0].GetMoney() >= targetMoney)
+        {
+            PauseGame();
+            winPanel.SetActive(true);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    players[0].AddMoney(1000);
+        //}
+
+        if (players.Count() == 1)
             CheckPanelForSingle();
         else if (players.Count() == 2)
             CheckPanelForLocal();
@@ -198,11 +229,33 @@ public class GameStateManager : MonoBehaviour
                 shopPanel.SetActive(false);
                 return;
             }
-            else if (farmPanel.activeSelf)
+            if (shopPanel_Left.activeSelf)
+            {
+                shopPanel_Left.SetActive(false);
+                return;
+            }
+            if (shopPanel_Right.activeSelf)
+            {
+                shopPanel_Right.SetActive(false);
+                return;
+            }
+
+            if (farmPanel.activeSelf)
             {
                 farmPanel.SetActive(false);
                 return;
             }
+            if (farmPanel_Left.activeSelf)
+            {
+                farmPanel_Left.SetActive(false);
+                return;
+            }
+            if (farmPanel_Right.activeSelf)
+            {
+                farmPanel_Right.SetActive(false);
+                return;
+            }
+
 
             if (!pausePanel.activeSelf)//open pause meny
             {
@@ -230,12 +283,12 @@ public class GameStateManager : MonoBehaviour
         else if (players.Count() == 2)
         {
             //if player 1 in farm range and press c, send the animal back to farm
-            if (players[0].playerController.placeAnimalInput && players[0].InFarm)
+            if (players[0].playerController.placeAnimalInput && players[0].InFarm && !players[0].InPanel)
             {
                 players[0].StoreToFarm(players[0].followingAnimals);
             }
             //if player 2 in farm range and press right control, send the animal back to farm
-            if (players[1].playerController.placeAnimalInput && players[1].InFarm)
+            if (players[1].playerController.placeAnimalInput && players[1].InFarm && !players[1].InPanel)
             {
                 players[1].StoreToFarm(players[1].followingAnimals);
             }
@@ -261,6 +314,7 @@ public class GameStateManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        UnPauseGame();
         SceneManager.LoadScene(0);
     }
 
@@ -275,7 +329,22 @@ public class GameStateManager : MonoBehaviour
         if(players.Count() == 2)
         {
             farmPanel_Left.GetComponent<FarmManager>().RefreshFarmList();
+            if (farmPanel_Left.activeSelf)
+            {
+                farmPanel_Left.GetComponent<FarmManager>().ResetSelected();
+                farmPanel_Left.GetComponent<FarmManager>().sellPanel.SetActive(false);
+                farmPanel_Left.GetComponent<FarmManager>().feedPanel.SetActive(false);
+
+
+            }
+
             farmPanel_Right.GetComponent<FarmManager>().RefreshFarmList();
+            if (farmPanel_Right.activeSelf)
+            {
+                farmPanel_Right.GetComponent<FarmManager>().ResetSelected();
+                farmPanel_Right.GetComponent<FarmManager>().sellPanel.SetActive(false);
+                farmPanel_Right.GetComponent<FarmManager>().feedPanel.SetActive(false);
+            }
         }
         
     }

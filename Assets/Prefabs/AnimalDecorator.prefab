@@ -372,7 +372,7 @@ MonoBehaviour:
   itemtype: {fileID: 1433224306811604427}
   type: 0
   slider: {fileID: 0}
-  toggleChoicePrefab: {fileID: 0}
+  toggleChoicePrefab: {fileID: 7366948055186458786, guid: 1e0a24b5bc0f33b428cdb1656e3826ec, type: 3}
 --- !u!1 &4528370173019735001
 GameObject:
   m_ObjectHideFlags: 0

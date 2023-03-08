@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 //Shengjie Zhang
 
 public class Player : MonoBehaviour
@@ -19,18 +23,11 @@ public class Player : MonoBehaviour
 
     public GameStateManager gsm;
     public PlayerMovement playerController;
-
+    public PlayerInput playerInput;
 
     [SerializeField] private Transform animalSpawnPos;
     [SerializeField] private Transform debugPos;
 
-
-    //public int Money { get; private set; }    // use serilizeField first for easier in-enigne test 
-    //public int SoyBean { get; private set; }
-    //public int Insect { get; private set; }
-    //public int Carrot { get; private set; }
-    //public int Corn { get; private set; }
-    //public int Hay { get; private set; }
 
     [SerializeField][Min(0)] private static int money = 0; 
     [SerializeField][Min(0)] private static int hay = 0; 
@@ -39,13 +36,21 @@ public class Player : MonoBehaviour
     [SerializeField][Min(0)] private static int carrot = 0;
     [SerializeField][Min(0)] private static int corn = 0;
 
-    private void Start()
+    
+    public List<MultiplayerEventSystem> eventSystems;
+
+    public void Awake()
     {
         playerController = GetComponent<PlayerMovement>();
+        playerInput = GetComponent<PlayerInput>();
         gsm = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         animalSpawnPos = GameObject.Find("AnimalSpawnPos").GetComponent<Transform>();
     }
-    
+    private void Start()
+    {
+        
+    }
+
     public int GetHay() { return hay; }
     public int GetSoybean() { return soybean; }
     public int GetInsect() { return insect; }
@@ -152,9 +157,8 @@ public class Player : MonoBehaviour
     public void RemoveAnimal(AnimalInstance animal)
     {
         animals.Remove(animal);
-        Destroy(animal.gameObject);
+        DestroyImmediate(animal.gameObject);
 
-        gsm.RefreshFarmForLocal();
     }
 
     private bool alreadyInList;

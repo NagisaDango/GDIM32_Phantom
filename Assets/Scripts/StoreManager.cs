@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 //Shenjie Zhang
 
 public class StoreManager : MonoBehaviour, IDecoratorManager
 {
     [SerializeField] private ItemDecorator AnimalDecoratorPrefab;
-    [SerializeField] private Transform animalInfoParrent;
+    public Transform animalInfoParrent;
 
-    [SerializeField] private Player currentPlayer; //todo: delete serializefield later
+    [SerializeField] private Player currentPlayer; 
 
+    public MultiplayerEventSystem eventSystem;
 
-    void Start()
+    void Awake()
     {
         //load animal and food definition into the shop panel
         SOAnimalDefinition[] animalDefs = Resources.LoadAll<SOAnimalDefinition>("AnimalDefinitions");
@@ -31,18 +34,29 @@ public class StoreManager : MonoBehaviour, IDecoratorManager
             fd.Initialize(food, this);
         }
 
+
     }
 
     private void OnEnable()
     {
-        //EventHandler.PlayerSpawnEvent += OnPlayerSpawnEvent;
         currentPlayer.InPanel = true;
+        if (animalInfoParrent.GetChild(0).gameObject.activeSelf)
+        {
+            Button btn = animalInfoParrent.GetChild(0).Find("BuyButton").GetComponent<Button>();
+            eventSystem.SetSelectedGameObject(null);
+            eventSystem.SetSelectedGameObject(btn.gameObject);
+            btn.OnSelect(null);
+        }
+
     }
     private void OnDisable()
     {
-        //EventHandler.PlayerSpawnEvent -= OnPlayerSpawnEvent;
         currentPlayer.InPanel = false;
+        eventSystem.SetSelectedGameObject(null);
+
     }
+
+
 
     public void OnPlayerSpawnEvent(Player player)
     {
