@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     //Load the main game scene
     public void StartGame(int playerCount)
     {
+        Debug.Log(1);
         SceneManager.LoadScene(1);
 
         EventHandler.CallStartGameEvent(playerCount);

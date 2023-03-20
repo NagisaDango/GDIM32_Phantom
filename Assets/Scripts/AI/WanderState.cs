@@ -36,7 +36,7 @@ public class WanderState : AIState
     public override bool CanExit()
     {
         //if the path set is complete exitable
-        if (agent.pathStatus == NavMeshPathStatus.PathComplete)
+        if (Vector3.Distance(agent.pathEndPosition, this.transform.position) <= 3)
         {
             return true;
         }

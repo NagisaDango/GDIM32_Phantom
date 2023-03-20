@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform animalSpawnPos;
     [SerializeField] private Transform debugPos;
 
+    [SerializeField] public Transform farmPos;
+    [SerializeField] public GameObject wolf;
+
 
     [SerializeField][Min(0)] private static int money = 0; 
     [SerializeField][Min(0)] private static int hay = 0; 
@@ -48,7 +51,8 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        
+        wolf = GameObject.FindGameObjectWithTag("Wolf");
+        farmPos = GameObject.FindGameObjectWithTag("Farm").transform;
     }
 
     public int GetHay() { return hay; }
@@ -56,6 +60,15 @@ public class Player : MonoBehaviour
     public int GetInsect() { return insect; }
     public int GetCarrot() { return carrot; }
     public int GetCorn() { return corn; }
+
+    public bool HaveAllFood()
+    {
+        if (hay == 0 || soybean == 0 || insect == 0 || carrot == 0 || corn == 0)
+        {
+            return false;
+        }
+        return true;
+    }
 
     public int GetMoney() { return money; }
 
