@@ -48,10 +48,10 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         gsm = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         animalSpawnPos = GameObject.Find("AnimalSpawnPos").GetComponent<Transform>();
+        wolf = GameObject.FindGameObjectWithTag("Wolf");
     }
     private void Start()
     {
-        wolf = GameObject.FindGameObjectWithTag("Wolf");
         farmPos = GameObject.FindGameObjectWithTag("Farm").transform;
     }
 

@@ -24,7 +24,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject winPanel;
 
-
+    public Player playerAIPrefab;
     public Player playerPrefab;
     public CameraController cc;
     public MultiplayerEventSystem eventsys;
@@ -110,6 +110,7 @@ public class GameStateManager : MonoBehaviour
             shopPanel.GetComponent<StoreManager>().SetPlayer(go);
             farmPanel.GetComponent<FarmManager>().SetPlayer(go);
             go.playerInput.neverAutoSwitchControlSchemes = false;
+            Instantiate(playerAIPrefab, playerSpawnPos[0].position, Quaternion.identity);
         }
 
 
