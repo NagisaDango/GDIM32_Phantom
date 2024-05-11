@@ -207,6 +207,8 @@ public class GameStateManager : MonoBehaviour
 
     void Update()
     {
+        if (players.Count <= 0) return;
+
         if (players[0].GetMoney() >= targetMoney)
         {
             PauseGame();

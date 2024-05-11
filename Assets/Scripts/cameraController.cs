@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
        
        foreach(Transform t in m_Targets)
        {
-            t.rotation = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+            //t.rotation = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
        } 
     }
 

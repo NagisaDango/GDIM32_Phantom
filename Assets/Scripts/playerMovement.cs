@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -44,11 +45,33 @@ public class PlayerMovement : MonoBehaviour
         if (player.InPanel) return;
 
         Vector3 currentVel = rb.velocity;
+        //Debug.Log("move Input" + moveInput);
         Vector3 targetVel = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+
+        Vector3 velocityChange = Vector3.ClampMagnitude(targetVel, maxForce);
+
+        targetVel *= moveSpeed;
+        targetVel.y = rb.velocity.y;
+        rb.velocity = targetVel;
+
+        Vector3 lookPos = transform.position + new Vector3(moveInput.x, 0, moveInput.y);
+        transform.LookAt(lookPos);
+
+        #region Old
+        /*
+        
+        //Debug.Log("Input vector " + targetVel);
+
+        //transform.rotation = Quaternion.Euler(0,moveInput.x,0);
+        
         targetVel *= moveSpeed;
 
+        
+        Debug.DrawRay(transform.position, targetVel);
+        transform.LookAt(targetVel);
+
         //align direction
-        targetVel = transform.TransformDirection(targetVel);
+        //targetVel = transform.TransformDirection(targetVel);
 
         //Calculate forces
         Vector3 velocityChange = targetVel - currentVel;
@@ -59,12 +82,20 @@ public class PlayerMovement : MonoBehaviour
 
         velocityChange.y = 0;
 
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        rb.AddRelativeForce(velocityChange, ForceMode.VelocityChange);
+
+        Debug.Log("force being added" + velocityChange);
+        //transform.LookAt(velocityChange);
+        //rb.AddTorque(velocityChange);
+        */
+        #endregion
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        Debug.Log("input changed" + moveInput);
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
