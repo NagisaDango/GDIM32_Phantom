@@ -15,6 +15,7 @@ public class PlayerChaseWolf : AIState
     public override void Enter(NavMeshAgent a)
     {
         base.Enter(a);//set the NavMeshAgent
+        thisPlayer = GetComponent<Player>();
         Chase();
     }
 

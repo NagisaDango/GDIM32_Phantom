@@ -111,7 +111,7 @@ public class GameStateManager : MonoBehaviour
             shopPanel.GetComponent<StoreManager>().SetPlayer(go);
             farmPanel.GetComponent<FarmManager>().SetPlayer(go);
             go.playerInput.neverAutoSwitchControlSchemes = false;
-            Instantiate(playerAIPrefab, playerSpawnPos[0].position, Quaternion.identity);
+            Instantiate(playerAIPrefab, playerSpawnPos[1].position, Quaternion.identity);
         }
 
 

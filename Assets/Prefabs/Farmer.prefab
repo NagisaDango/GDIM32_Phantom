@@ -2183,14 +2183,13 @@ GameObject:
   - component: {fileID: 3235643947696119632}
   - component: {fileID: 8680763434016184897}
   - component: {fileID: 2973787326705742582}
-  - component: {fileID: 6529418588118436994}
   m_Layer: 0
   m_Name: Farmer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7769034341399070360
 Transform:
   m_ObjectHideFlags: 0
@@ -2200,7 +2199,7 @@ Transform:
   m_GameObject: {fileID: 3584921698225774847}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.329442, y: 0.00000011920929, z: 11.385324}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2301,6 +2300,8 @@ MonoBehaviour:
   debugPos: {fileID: 0}
   farmPos: {fileID: 0}
   wolf: {fileID: 0}
+  anim: {fileID: 0}
+  rd: {fileID: 0}
   eventSystems: []
 --- !u!114 &8680763434016184897
 MonoBehaviour:
@@ -2438,21 +2439,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!111 &6529418588118436994
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3584921698225774847}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: -6206981513316247533, guid: c346a9e2503cda64ba4698db6aa5e707, type: 3}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &3594117427526816304
 GameObject:
   m_ObjectHideFlags: 0

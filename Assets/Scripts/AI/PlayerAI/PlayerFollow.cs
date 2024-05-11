@@ -23,7 +23,7 @@ public class PlayerFollow : AIState
         {
             animalObj = null;
             followingAnimal = null;
-            canExit = true;
+            canExit = true; 
             canEnter = false;
         }
         else if (followingAnimal != null && thisPlayer.HaveAllFood())
@@ -55,7 +55,7 @@ public class PlayerFollow : AIState
             animalObj = null;
             followingAnimal = null;
             canExit = true;
-            canEnter=false;
+            canEnter= false;
         }
     }
 

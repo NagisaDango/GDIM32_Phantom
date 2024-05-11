@@ -12,6 +12,8 @@ public class AIState : MonoBehaviour
     {
         if (states.Count == 0)
             Debug.Log("no state");
+
+
     }
 
     public virtual bool CanEnter()
@@ -27,10 +29,11 @@ public class AIState : MonoBehaviour
     public virtual void Enter(NavMeshAgent a)
     {
         agent = a;
+        
     }
 
     public virtual void Exit()
     {
-
+        
     }
 }
