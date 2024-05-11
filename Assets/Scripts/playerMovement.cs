@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float maxForce;
+    [SerializeField] private Animator anim ;
+    private Vector3 playerMoveRange_UL;
+    private Vector3 playerMoveRange_BR;
 
 
     private Player player;
@@ -31,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Player>();
         playerInput = GetComponent<PlayerInput>();
+        playerMoveRange_UL = GameObject.Find("PlayerMoveRange_UL").transform.position;
+        playerMoveRange_BR = GameObject.Find("PlayerMoveRange_BR").transform.position;
 
 
     }
@@ -45,17 +50,34 @@ public class PlayerMovement : MonoBehaviour
         if (player.InPanel) return;
 
         Vector3 currentVel = rb.velocity;
-        //Debug.Log("move Input" + moveInput);
-        Vector3 targetVel = new Vector3(moveInput.x, 0, moveInput.y).normalized;
-
-        Vector3 velocityChange = Vector3.ClampMagnitude(targetVel, maxForce);
-
-        targetVel *= moveSpeed;
-        targetVel.y = rb.velocity.y;
-        rb.velocity = targetVel;
 
         Vector3 lookPos = transform.position + new Vector3(moveInput.x, 0, moveInput.y);
         transform.LookAt(lookPos);
+
+        Vector3 targetVel = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+
+
+        targetVel *= moveSpeed;
+
+        if (targetVel != Vector3.zero) anim.SetBool("Running", true);
+        else anim.SetBool("Running", false);
+
+        targetVel.y = rb.velocity.y;
+
+        Vector3 nextPos = transform.position + targetVel * Time.fixedDeltaTime;
+        // Debug.Log(transform.position + " , " + nextPos );
+        if (nextPos.x < playerMoveRange_UL.x || nextPos.z > playerMoveRange_UL.z ||
+            nextPos.x > playerMoveRange_BR.x || nextPos.z < playerMoveRange_BR.z)
+        {
+            Debug.Log("at boundary");
+            rb.velocity = Vector3.zero;
+            return;
+        }
+            
+
+        rb.velocity = targetVel;
+
+        
 
         #region Old
         /*
@@ -95,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        Debug.Log("input changed" + moveInput);
     }
     public void OnInteract(InputAction.CallbackContext context)
     {

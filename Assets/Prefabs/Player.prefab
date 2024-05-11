@@ -30,13 +30,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9016388346704269290}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9016388346704269280
 MeshFilter:
@@ -157,6 +157,8 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   animalSpawnPos: {fileID: 0}
   debugPos: {fileID: 0}
+  farmPos: {fileID: 0}
+  wolf: {fileID: 0}
   eventSystems: []
 --- !u!114 &9016388346704269282
 MonoBehaviour:
@@ -173,7 +175,11 @@ MonoBehaviour:
   moveSpeed: 8
   rb: {fileID: 9016388346704269287}
   maxForce: 10
-  backpack: {fileID: 0}
+  anim: {fileID: 0}
+  PlayerMoveRange_UL: {x: 0, y: 0, z: 0}
+  PlayerMoveRange_BR: {x: 0, y: 0, z: 0}
+  player: {fileID: 9016388346704269284}
+  playerInput: {fileID: 1580111652}
   interactInput: 0
   placeAnimalInput: 0
 --- !u!114 &1580111652

@@ -82,6 +82,7 @@ public class GameStateManager : MonoBehaviour
             players.Add(go);
             cc.m_Targets.Add(go.transform);
             players[i].SetMoney(moneypreset);
+            go.gameObject.SetActive(true);
 
             displayPanel.GetComponent<DisplayManager>().SetPlayer(go);
 
