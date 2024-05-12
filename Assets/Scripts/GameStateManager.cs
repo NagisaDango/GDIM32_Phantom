@@ -13,7 +13,9 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
-    public Transform canvas;
+    [SerializeField] private Transform canvas;
+    [SerializeField] private Transform canvasMulti;
+
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject shopPanel_Left;
     [SerializeField] private GameObject shopPanel_Right;
@@ -112,7 +114,14 @@ public class GameStateManager : MonoBehaviour
             farmPanel.GetComponent<FarmManager>().SetPlayer(go);
             go.playerInput.neverAutoSwitchControlSchemes = false;
             Instantiate(playerAIPrefab, playerSpawnPos[1].position, Quaternion.identity);
+            canvas.gameObject.SetActive(true);
         }
+        else if(GameManager._playerCount == 2)
+        {
+            canvas.gameObject.SetActive(true);
+
+        }
+
 
 
     }
@@ -121,8 +130,10 @@ public class GameStateManager : MonoBehaviour
     {
         if (players[0].InShop) //open the shop panel when player is near the shop
         {
+            Debug.Log("enter in shop");
             if (players[0].playerController.interactInput)
             {
+                Debug.Log("enter interact");
                 if (!shopPanel.activeSelf)
                     shopPanel.SetActive(true);
                 else
@@ -138,6 +149,9 @@ public class GameStateManager : MonoBehaviour
 
         if (players[0].InFarm) //open the farm panel when player is near the farm
         {
+
+            Debug.Log("enter in farm");
+
             if (players[0].playerController.interactInput)
             {
                 if (!farmPanel.activeSelf)
@@ -164,6 +178,7 @@ public class GameStateManager : MonoBehaviour
 
             if (p.InShop) //open the shop panel when player is near the shop
             {
+                Debug.Log("enter in shop");
                 if (p.playerController.interactInput)
                 {
 
@@ -183,6 +198,7 @@ public class GameStateManager : MonoBehaviour
 
             if (p.InFarm) //open the farm panel when player is near the farm
             {
+                Debug.Log("enter in farm");
                 if (p.playerController.interactInput)
                 {
 

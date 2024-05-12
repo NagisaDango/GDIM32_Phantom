@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEditor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -39,7 +40,10 @@ public class Player : MonoBehaviour
     [SerializeField][Min(0)] private static int carrot = 0;
     [SerializeField][Min(0)] private static int corn = 0;
 
-    
+    [SerializeField] private ButtonTextDisplay shopBtnText;
+    [SerializeField] private ButtonTextDisplay farmBtnText;
+
+
     public List<MultiplayerEventSystem> eventSystems;
 
     public void Awake()
@@ -49,6 +53,9 @@ public class Player : MonoBehaviour
         gsm = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
         animalSpawnPos = GameObject.Find("AnimalSpawnPos").GetComponent<Transform>();
         wolf = GameObject.FindGameObjectWithTag("Wolf");
+        shopBtnText = GameObject.Find("ShopBtnText").GetComponent<ButtonTextDisplay>();
+        farmBtnText = GameObject.Find("FarmBtnText").GetComponent<ButtonTextDisplay>();
+
     }
     private void Start()
     {
@@ -210,10 +217,24 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Farm"))
         {
             InFarm = true;
+            //farmBtnText.SetActive(true);
         }
         if (other.gameObject.CompareTag("Shop"))
         {
             InShop = true;
+            //shopBtnText.SetActive(true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Farm"))
+        {
+            farmBtnText.OnStay();
+        }
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            shopBtnText.OnStay();    
         }
     }
     private void OnTriggerExit(Collider other)
@@ -221,10 +242,13 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Farm"))
         {
             InFarm = false;
+            farmBtnText.OnExit();
+
         }
         if (other.gameObject.CompareTag("Shop"))
         {
             InShop = false;
+            shopBtnText.OnExit();
         }
         if(other.gameObject.CompareTag("Animal"))
         {

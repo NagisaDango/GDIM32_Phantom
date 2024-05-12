@@ -47,7 +47,7 @@ public class AIBase : MonoBehaviour
 
         if (agent.gameObject.GetComponent<Player>())
         {
-            Debug.Log(rd.velocity + "  , " + (rd.velocity.x != 0 && rd.velocity.z != 0));
+            //Debug.Log(rd.velocity + "  , " + (rd.velocity.x != 0 && rd.velocity.z != 0));
             if (rd.velocity.x != 0 && rd.velocity.z != 0)
             {
 
