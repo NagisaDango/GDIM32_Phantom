@@ -109,6 +109,9 @@ public class FarmManager : MonoBehaviour, IDecoratorManager
         }
         else
         {
+            if (animalInfoParrent.childCount == 0)
+                return;
+
             Button btn = animalInfoParrent.GetChild(0).Find("Feed").GetComponent<Button>();
             StartCoroutine(ResetNewSelected(btn));
         }

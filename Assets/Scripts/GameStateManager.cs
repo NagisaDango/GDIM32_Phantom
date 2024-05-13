@@ -178,7 +178,7 @@ public class GameStateManager : MonoBehaviour
 
             if (p.InShop) //open the shop panel when player is near the shop
             {
-                Debug.Log("enter in shop");
+                //Debug.Log("enter in shop");
                 if (p.playerController.interactInput)
                 {
 
@@ -198,7 +198,7 @@ public class GameStateManager : MonoBehaviour
 
             if (p.InFarm) //open the farm panel when player is near the farm
             {
-                Debug.Log("enter in farm");
+                //Debug.Log("enter in farm");
                 if (p.playerController.interactInput)
                 {
 

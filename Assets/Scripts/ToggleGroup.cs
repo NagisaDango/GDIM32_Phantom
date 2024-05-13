@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 //by Yiran Luo
 
 public class MyToggleGroup : MonoBehaviour
@@ -30,29 +33,65 @@ public class MyToggleGroup : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(EventSystem.current.currentSelectedGameObject);
+        Debug.Log(eventSys.currentSelectedGameObject);
+
+
         if (IsAnyToggleSelected())
         {
             MyToggle toggle = eventSys.currentSelectedGameObject.GetComponent<MyToggle>();
 
-            if(lastSelectedToggle != toggle)
+            if (lastSelectedToggle==null)
             {
-                if (toggle.IsSelected)
+                lastSelectedToggle = toggle;
+                Debug.Log(5555);
+
+                return;
+            }
+
+
+            ///*
+            //if (lastSelectedToggle != toggle)// && lastSelectedToggle != null)
+            //{
+                Debug.Log(1111+" ,  "+ lastSelectedToggle);
+                if (lastSelectedToggle.IsSelected )
                 {
-                    toggle.OnDeselect();
+                    Debug.Log(2222);
+                    if(lastSelectedToggle != toggle)
+                    {
+                        lastSelectedToggle.OnDeselect();
+
+                    }
                 }
                 else
                 {
+                    Debug.Log(3333);
+
                     toggle.SetSelected(true);
                 }
-            }
-            else
-            {
+            //}
+            //else
+            //{
+              //  Debug.Log(4444);
 
-            }
+            //}
             lastSelectedToggle = toggle;
         }
+        else
+        {
 
+            if (toggles.Count() > 0)
+            {
+                //lastSelectedToggle = toggles[0].GetComponent<MyToggle>();
+                //lastSelectedToggle.SetSelected(true);
+            }
+            //lastSelectedToggle = null;
+        }//*/
 
+            //lastSelectedToggle.OnDeselect();
+            //toggle.SetSelected(true);
+            //lastSelectedToggle = null;
+        
     }
 
     public bool IsAnyToggleSelected()

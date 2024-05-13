@@ -35,7 +35,6 @@ RectTransform:
   - {fileID: 939176325500710037}
   - {fileID: 1272102541034948147}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -116,7 +115,7 @@ MonoBehaviour:
   image: {fileID: 901269654364745592}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 1, g: 0.7254902, b: 0, a: 1}
-  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  highlightColor: {r: 1, g: 0.6360489, b: 0.46226406, a: 1}
   disabledColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 0.5019608}
   onSelect:
     m_PersistentCalls:
@@ -173,7 +172,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2639897484259744840}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -249,7 +247,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2639897484259744840}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
