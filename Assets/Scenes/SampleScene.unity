@@ -11450,6 +11450,8 @@ MonoBehaviour:
   eventSystems:
   - {fileID: 1165259158}
   - {fileID: 657215007}
+  module: {fileID: -944628639613478452, guid: 741d397802112d541a67f60160eaed68, type: 3}
+  module2: {fileID: -944628639613478452, guid: e589c6e071090a643ad680f48758c8b3, type: 3}
   moneypreset: 500
   targetMoney: 1000
 --- !u!1 &1762250195

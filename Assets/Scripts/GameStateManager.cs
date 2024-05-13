@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//by Xinlin Li
 
 public class GameStateManager : MonoBehaviour
 {
@@ -33,6 +32,10 @@ public class GameStateManager : MonoBehaviour
     public List<Player> players = new List<Player>();
     public List<Transform> playerSpawnPos = new List<Transform>();
     public List<MultiplayerEventSystem> eventSystems = new List<MultiplayerEventSystem>();
+
+    public InputActionAsset module;
+    public InputActionAsset module2;
+
 
     [SerializeField] private int moneypreset = 500;
     [SerializeField] private int targetMoney = 1000;
@@ -74,8 +77,8 @@ public class GameStateManager : MonoBehaviour
         };
 
         Player go = null;
-        InputActionAsset module = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction.inputactions", typeof(InputActionAsset));
-        InputActionAsset module2 = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction_Multi.inputactions", typeof(InputActionAsset));
+        //InputActionAsset module = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction.inputactions", typeof(InputActionAsset));
+        //InputActionAsset module2 = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Scripts/PlayerAction_Multi.inputactions", typeof(InputActionAsset));
 
         for (int i = 0; i < GameManager._playerCount; i++)
         {
