@@ -50,9 +50,6 @@ public class MyToggleGroup : MonoBehaviour
             }
 
 
-            ///*
-            //if (lastSelectedToggle != toggle)// && lastSelectedToggle != null)
-            //{
                 Debug.Log(1111+" ,  "+ lastSelectedToggle);
                 if (lastSelectedToggle.IsSelected )
                 {
@@ -69,28 +66,8 @@ public class MyToggleGroup : MonoBehaviour
 
                     toggle.SetSelected(true);
                 }
-            //}
-            //else
-            //{
-              //  Debug.Log(4444);
-
-            //}
             lastSelectedToggle = toggle;
         }
-        else
-        {
-
-            if (toggles.Count() > 0)
-            {
-                //lastSelectedToggle = toggles[0].GetComponent<MyToggle>();
-                //lastSelectedToggle.SetSelected(true);
-            }
-            //lastSelectedToggle = null;
-        }//*/
-
-            //lastSelectedToggle.OnDeselect();
-            //toggle.SetSelected(true);
-            //lastSelectedToggle = null;
         
     }
 
