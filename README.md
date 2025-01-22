@@ -7,13 +7,11 @@ Animals can either be bought from the shop, and you have to buy food from the sh
 
 Animals can also be caught in the wild, if you have the food that they like, they will follow you once you are close to them. Only one animal will follow you at the time. 
 
-![image](https://github.com/user-attachments/assets/c72b0a8b-8116-4f9f-9b24-c7d8905e8f44)
-
+![396633082-3e047b89-e3f0-42b6-a40a-a085df88aa41](https://github.com/user-attachments/assets/73c0f6d3-dde8-4d72-a3d2-d5c10376745e)
 
 Be careful of the wolf out in the wild, it will hunt the animal it sees, but it is scare of human, so you can walk over to scare it away from the animals.
 
-![image](https://github.com/user-attachments/assets/6fe5576d-cbf7-4d85-86ac-10b670f73ff3)
-
+![396633146-0cfc35b6-facc-49eb-b0d7-4b6ae08613a4](https://github.com/user-attachments/assets/71008b3e-3b90-427e-a530-2915f384c623)
 
 You will be start the game in the main menu, you can either choose to play the game by yourself with an AI player or with another player locally, and the quit button will quit the game.
 
